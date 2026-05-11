@@ -1,0 +1,232 @@
+[
+  {
+    "name": "animales",
+    "type": "Grupal",
+    "description": "El objetivo es hacer reír a los demás, por lo tanto los jugadores no pueden mostrar los dientes. El primer jugador en hacerlo perderá y beberá 3 Tragos.\nPara comenzar cada jugador elige 1 animal + 1 adjetivo, ejemplo: El Perro Peludo."
+  },
+  {
+    "name": "el-sirviente",
+    "type": "Especial",
+    "description": "Felicidades has sido contratado como Sirviente.\nTus funciones son:\n1.- Procurar que el rey siempre tenga Bebida\n2.- Mantener la mesa limpia y ordenada.\n3.- Servir los Shots."
+  },
+  {
+    "name": "doblete",
+    "type": "Acción",
+    "description": "Envías 2 Shots."
+  },
+  {
+    "name": "al-cielo",
+    "type": "Reacción",
+    "description": "Los jugadores levantan ambos brazos, el último en hacerlo pierde."
+  },
+  {
+    "name": "los-7-pecados",
+    "type": "Grupal",
+    "description": "Por turnos, los jugadores contarán en voz alto del 1 al 37. Los números que contengan 7 o múltiplos de 7, se sustituirán por uno de los 7 Pecados Capitales*. El primer jugador que se equivoque pierde y toma 7 tragos de su bebida.\nEjemplo: 1,2,3,4,5,6,Gula,8,9,10,11,12,13,Ira,15,16...\n*Los pecados no se pueden repetir. Si llegan al 37, ese jugador pierde"
+  },
+  {
+    "name": "apodos",
+    "type": "Especial",
+    "description": "Cada jugador bautizará al jugador de su derecha con un apodo. Durante el resto del juego los jugadores deben referirse a los demás utilizando esos apodos. Cada que un jugador lo olvide o se equivoque beberá 1 Trago."
+  },
+  {
+    "name": "granada",
+    "type": "Especial",
+    "description": "El jugador de tu elección bebe 2 Shots, los jugadores a sus costados beben 1 Shot cada uno."
+  },
+  {
+    "name": "al-suelo",
+    "type": "Reacción",
+    "description": "Los jugadores colocan las 2 manos en el suelo, el último en lograrlo bebe 1 Shot."
+  },
+  {
+    "name": "beatbox",
+    "type": "Grupal",
+    "description": "Comienza el juego haciendo un sonido con la boca. Puede ser tan simple o tan complejo como desees pero debes de mantener haciéndolo durante todo el juego."
+  },
+  {
+    "name": "viaje-al-pasado",
+    "type": "Especial",
+    "description": "Escoge una carta de la Pila del Pasado y juégala."
+  },
+  {
+    "name": "turbochela",
+    "type": "Acción",
+    "description": "El jugador de tu elección recibe una Turbochela."
+  },
+  {
+    "name": "zafo",
+    "type": "Reacción",
+    "description": "Los jugadores cruzan sus brazos y gritan ''Zafo'', el último en lograrlo pierde y bebe 1 Shot."
+  },
+  {
+    "name": "caricachupas",
+    "type": "Grupal",
+    "description": "El jugador en Turno escoge un Tema o categoría y cada jugador va ir diciendo una palabra de esa categoría. Ejemplo, Frutas: Mango, Piña, Pera."
+  },
+  {
+    "name": "u-la-la",
+    "type": "Especial",
+    "description": "Vigencia: 3 Turnos"
+  },
+  {
+    "name": "tic-toc",
+    "type": "Acción",
+    "description": "Programa una alarma en tu teléfono con un tiempo de tu elección entre 1 y 10 minutos."
+  },
+  {
+    "name": "terremoto",
+    "type": "Reacción",
+    "description": "El jugador en Turno cuenta 5 segundos. En ese tiempo los demás jugadores deberán realizar un simulacro de sismo y protegerse. Aquellos jugadores que no logren pierden y reciben 1 Shot."
+  },
+  {
+    "name": "yo-nunca-nunca",
+    "type": "Grupal",
+    "description": "Jugaremos 1 Ronda de Yo Nunca Nunca, es decir, cada jugador dirá un Yo Nunca Nunca."
+  },
+  {
+    "name": "viaje-al-futuro",
+    "type": "Especial",
+    "description": "Escoge una carta de la Pila del Futuro y juégala. Barajea la Pila del Futuro."
+  },
+  {
+    "name": "shot",
+    "type": "Acción",
+    "description": "El jugador de tu elección bebe 1 Shot."
+  },
+  {
+    "name": "tablas",
+    "type": "Reacción",
+    "description": "El jugador en Turno será el Juez."
+  },
+  {
+    "name": "un-mexicano-dice",
+    "type": "Grupal",
+    "description": "Comienza el juego diciendo:\nUn Mexicano no dice: (Aquí agregas una frase o una palabra) Ejemplo: ''Comer''"
+  },
+  {
+    "name": "kinder-trunco",
+    "type": "Especial",
+    "description": "Escoge una Vocal (A,E,I,O,U)"
+  },
+  {
+    "name": "teibol",
+    "type": "Acción",
+    "description": "El jugador de tu elección bailará en un tubo imaginario."
+  },
+  {
+    "name": "retortijon",
+    "type": "Reacción",
+    "description": "Los jugadores corren al baño más cercano y se intentan sentar en la Taza. El primero en sentarse en el Trono será proclamado Rey. El último en entrar al baño o los que se queden afuera pierden y reciben 1 Shot."
+  },
+  {
+    "name": "preguntas",
+    "type": "Grupal",
+    "description": "Este juego se trata de hacer preguntas, pero estas preguntas no deben ser respondidas. Cuando un jugador responde o se congela por 3 segundos pierde."
+  },
+  {
+    "name": "el-rey",
+    "type": "Acción",
+    "description": "Felicidades!"
+  },
+  {
+    "name": "poligrafo",
+    "type": "Acción",
+    "description": "Hazle una pregunta a un jugador, intenta que sea una pregunta incómoda o comprometedora."
+  },
+  {
+    "name": "manotazo",
+    "type": "Reacción",
+    "description": "Grita Manotazo y avienta esta carta en la mesa y ponle la mano encima (o sea dale un manotazo)."
+  },
+  {
+    "name": "mi-pito-y-mi-pepa",
+    "type": "Grupal",
+    "description": "Los jugadores no pueden mostrar los dientes."
+  },
+  {
+    "name": "defectos",
+    "type": "Especial",
+    "description": "Cada jugador bautiza a la persona a su derecha con un defecto. Ese defecto se convertirá en su apodo. Durante los siguientes 10 Turnos deberán utilizar esos apodos en lugar de sus Nombres. Cuando un jugador se equivoque o lo olvide, recibirá 1 Trago."
+  },
+  {
+    "name": "nuke",
+    "type": "Acción",
+    "description": "Todos los jugadores reciben 1 Shot."
+  },
+  {
+    "name": "fusion",
+    "type": "Reacción",
+    "description": "Los jugadores en parejas juntan las puntas de sus dedos índice."
+  },
+  {
+    "name": "historia",
+    "type": "Grupal",
+    "description": "Comienza el juego diciendo 1 Palabra."
+  },
+  {
+    "name": "buenos-modales",
+    "type": "Especial",
+    "description": "Hasta tu siguiente Turno los jugadores deberán hablarse ''De Usted'' y utilizar Títulos al referirse a otro jugador. (Señor, Señora, Licenciado, etc)"
+  },
+  {
+    "name": "mina",
+    "type": "Acción",
+    "description": "Bebes 2 Shots y los jugadores a tus costados beben 1 Shot. (1-2-1)"
+  },
+  {
+    "name": "fondo",
+    "type": "Reacción",
+    "description": "Los jugadores terminan toda su bebida y azotan su vaso o lata en la mesa. El último jugador en lograrlo pierde y recibe 1 Shot."
+  },
+  {
+    "name": "el-gemido",
+    "type": "Grupal",
+    "description": "Por Turnos, cada jugador actuará un gemido. Se vale todo. Posteriormente realicen una votación por el mejor gemido."
+  },
+  {
+    "name": "co%C3%B1o-tio",
+    "type": "Especial",
+    "description": "Durante los siguientes 3 Turnos los jugadores deberán hablar en Español con acento de España. Cada que un jugador lo olvide beberá 1 Trago."
+  },
+  {
+    "name": "ruleta-rusa",
+    "type": "Acción",
+    "description": "Toma 5 cartas de la Pila del Pasado y barajéalas con esta carta. Coloca las cartas en la mesa boca abajo."
+  },
+  {
+    "name": "balacera",
+    "type": "Reacción",
+    "description": "Grita Balacera!"
+  },
+  {
+    "name": "discrepo",
+    "type": "Grupal",
+    "description": "Di una palabra, ahora el siguiente jugador dirá una palabra que se relacione con la palabra que dijiste. Ahora el siguiente dice una que se relacione con la anterior y así sucesivamente."
+  },
+  {
+    "name": "harakiri",
+    "type": "Acción",
+    "description": "Escoge 1 de las siguientes opciones:"
+  },
+  {
+    "name": "karma",
+    "type": "Acción",
+    "description": "Bebes 1 Shot."
+  },
+  {
+    "name": "cavernicolas",
+    "type": "Grupal",
+    "description": "Vamos a contar en número Romanos por turnos, pero utilizando las siguientes equivalencias:"
+  },
+  {
+    "name": "kamikaze",
+    "type": "Acción",
+    "description": "Tu y el jugador de tu elección reciben 1 Shot."
+  },
+  {
+    "name": "desletrados",
+    "type": "Grupal",
+    "description": "Bienvenidos al Concurso Nacional de Deletreo, o Spelling Bee como dicen los americanos."
+  }
+]

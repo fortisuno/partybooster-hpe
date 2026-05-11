@@ -1,0 +1,362 @@
+[
+  {
+    "id": 1,
+    "hechizo": "Accio",
+    "uso": "Encanto de invocación"
+  },
+  {
+    "id": 2,
+    "hechizo": "Glisseo",
+    "uso": "Convierte una escalera en un tobogán"
+  },
+  {
+    "id": 3,
+    "hechizo": "Impervius",
+    "uso": "Protege al lanzador de una variedad de sustancias, incluidos el agua y el fuego."
+  },
+  {
+    "id": 4,
+    "hechizo": "Wingardium Leviosa/Locomotor",
+    "uso": "Levita objetos"
+  },
+  {
+    "id": 5,
+    "hechizo": "Scourgify",
+    "uso": "Limpia cosas"
+  },
+  {
+    "id": 6,
+    "hechizo": "Portus",
+    "uso": "Crea un traslador"
+  },
+  {
+    "id": 7,
+    "hechizo": "Orchideous",
+    "uso": "Crece flores desde el final de la varita"
+  },
+  {
+    "id": 8,
+    "hechizo": "Lumos",
+    "uso": "Hace que la varita emita luz"
+  },
+  {
+    "id": 9,
+    "hechizo": "Reparo",
+    "uso": "Repara objetos rotos"
+  },
+  {
+    "id": 10,
+    "hechizo": "Reducio",
+    "uso": "Contrae objetos"
+  },
+  {
+    "id": 11,
+    "hechizo": "Pack",
+    "uso": "Empaca baúles y equipaje"
+  },
+  {
+    "id": 12,
+    "hechizo": "Riddikulus",
+    "uso": "Transforma los Boggarts en una forma divertida"
+  },
+  {
+    "id": 13,
+    "hechizo": "Protego",
+    "uso": "Protege al lanzador de las maldiciones"
+  },
+  {
+    "id": 14,
+    "hechizo": "Muffliato",
+    "uso": "Evita que otras personas cercanas escuchen conversaciones"
+  },
+  {
+    "id": 15,
+    "hechizo": "Silencio/Langlock",
+    "uso": "Evita que alguien hable (pegando la lengua al paladar)"
+  },
+  {
+    "id": 16,
+    "hechizo": "Expelliarmus",
+    "uso": "Encanto de desarme"
+  },
+  {
+    "id": 17,
+    "hechizo": "Oblivate",
+    "uso": "Borra recuerdos"
+  },
+  {
+    "id": 18,
+    "hechizo": "Episkey",
+    "uso": "Cura heridas leves"
+  },
+  {
+    "id": 19,
+    "hechizo": "Tergeo",
+    "uso": "Limpia superficies"
+  },
+  {
+    "id": 20,
+    "hechizo": "Relashio",
+    "uso": "Obliga al objetivo a soltar lo que sea que esté sosteniendo"
+  },
+  {
+    "id": 21,
+    "hechizo": "Confundo",
+    "uso": "Causa confusiones y hace que otros sean fácilmente susceptibles a la influencia."
+  },
+  {
+    "id": 22,
+    "hechizo": "Expecto Patronum",
+    "uso": "Encanto Patronus"
+  },
+  {
+    "id": 23,
+    "hechizo": "Ferula",
+    "uso": "Conjura vendajes"
+  },
+  {
+    "id": 24,
+    "hechizo": "Evanesco",
+    "uso": "Hechizo de desaparición"
+  },
+  {
+    "id": 25,
+    "hechizo": "Alohomora",
+    "uso": "Abre cerraduras"
+  },
+  {
+    "id": 26,
+    "hechizo": "Nox",
+    "uso": "Apaga lumos"
+  },
+  {
+    "id": 27,
+    "hechizo": "Quietus",
+    "uso": "Silencia la voz mágicamente amplificada"
+  },
+  {
+    "id": 28,
+    "hechizo": "Incendio",
+    "uso": "Crea fuego"
+  },
+  {
+    "id": 29,
+    "hechizo": "Homenum Revelio",
+    "uso": "Revelar personas cercanas"
+  },
+  {
+    "id": 30,
+    "hechizo": "Prior Incantato",
+    "uso": "Revela el último hechizo lanzado"
+  },
+  {
+    "id": 31,
+    "hechizo": "Finite Incantatem",
+    "uso": "Niega los efectos de muchos hechizos."
+  },
+  {
+    "id": 32,
+    "hechizo": "Erecto",
+    "uso": "Levanta carpas u otras estructuras."
+  },
+  {
+    "id": 33,
+    "hechizo": "Diffindo",
+    "uso": "Corta o rasga material"
+  },
+  {
+    "id": 34,
+    "hechizo": "Stupefy",
+    "uso": "Aturde al objetivo"
+  },
+  {
+    "id": 35,
+    "hechizo": "Repelo Muggletum",
+    "uso": "Repele Muggles"
+  },
+  {
+    "id": 36,
+    "hechizo": "Avada Kedavra",
+    "uso": "La maldición asesina"
+  },
+  {
+    "id": 37,
+    "hechizo": "Aguamenti",
+    "uso": "Dispara agua con la varita"
+  },
+  {
+    "id": 38,
+    "hechizo": "Geminio",
+    "uso": "Crea un duplicado temporal y sin valor de cualquier objeto"
+  },
+  {
+    "id": 39,
+    "hechizo": "Locomotor Mortis",
+    "uso": "Maldición de bloqueo de piernas"
+  },
+  {
+    "id": 40,
+    "hechizo": "Anapneo",
+    "uso": "Limpia las vías respiratorias de alguien"
+  },
+  {
+    "id": 41,
+    "hechizo": "Reducto",
+    "uso": "Explota objeto"
+  },
+  {
+    "id": 42,
+    "hechizo": "Obscuro",
+    "uso": "Objetivo con los ojos vendados"
+  },
+  {
+    "id": 43,
+    "hechizo": "Impedimenta",
+    "uso": "Congela a alguien que avanza hacia ti"
+  },
+  {
+    "id": 44,
+    "hechizo": "Cave Inimicum/Protego Totalum",
+    "uso": "Fortalece las defensas de un área"
+  },
+  {
+    "id": 45,
+    "hechizo": "Meteolojinx Recanto",
+    "uso": "Acaba con los efectos de los hechizos meteorológicos"
+  },
+  {
+    "id": 46,
+    "hechizo": "Specialis Revelio",
+    "uso": "Revela propiedades mágicas ocultas en un objeto."
+  },
+  {
+    "id": 47,
+    "hechizo": "Descendo",
+    "uso": "Mueve objetos hacia abajo"
+  },
+  {
+    "id": 48,
+    "hechizo": "Defodio",
+    "uso": "Talla a través de la piedra y el acero"
+  },
+  {
+    "id": 49,
+    "hechizo": "Aparecium",
+    "uso": "Hacer aparecer tinta invisible"
+  },
+  {
+    "id": 50,
+    "hechizo": "Piertotum Locomotor",
+    "uso": "Anima estatuas"
+  },
+  {
+    "id": 51,
+    "hechizo": "Imperio",
+    "uso": "Hace que el objetivo obedezca cada orden"
+  },
+  {
+    "id": 52,
+    "hechizo": "Fidelius Charm",
+    "uso": "Une un secreto al alma de un Guardián de Secretos"
+  },
+  {
+    "id": 53,
+    "hechizo": "Avis/Oppugno",
+    "uso": "Dispara bandada de pájaros con varita"
+  },
+  {
+    "id": 54,
+    "hechizo": "Expulso",
+    "uso": "Explota objetos"
+  },
+  {
+    "id": 55,
+    "hechizo": "Legilimens",
+    "uso": "Revela recuerdos y pensamientos del objetivo."
+  },
+  {
+    "id": 56,
+    "hechizo": "Duro",
+    "uso": "Endurece los objetos"
+  },
+  {
+    "id": 57,
+    "hechizo": "Sonorus",
+    "uso": "Amplifica la voz de uno"
+  },
+  {
+    "id": 58,
+    "hechizo": "Deprimo",
+    "uso": "Crea una gran presión hacia abajo"
+  },
+  {
+    "id": 59,
+    "hechizo": "Levicorpus",
+    "uso": "Levita el objetivo por el tobillo"
+  },
+  {
+    "id": 60,
+    "hechizo": "Liberacorpus",
+    "uso": "Reduce el objetivo de levicorpus"
+  },
+  {
+    "id": 61,
+    "hechizo": "Mobilicorpus",
+    "uso": "Mueve cuerpos"
+  },
+  {
+    "id": 62,
+    "hechizo": "Confringo",
+    "uso": "Explota objetos en llamas"
+  },
+  {
+    "id": 63,
+    "hechizo": "Densaugeo",
+    "uso": "Hace que los dientes crezcan rápidamente"
+  },
+  {
+    "id": 64,
+    "hechizo": "Incarcarous",
+    "uso": "Ata a alguien con cuerdas"
+  },
+  {
+    "id": 65,
+    "hechizo": "Deletrius",
+    "uso": "Descarta los efectos de Prior Incantato"
+  },
+  {
+    "id": 66,
+    "hechizo": "Rictusempra",
+    "uso": "Encanto de cosquillas"
+  },
+  {
+    "id": 67,
+    "hechizo": "Petrificus Totalus",
+    "uso": "El objetivo de renderizado está completamente inmóvil"
+  },
+  {
+    "id": 68,
+    "hechizo": "Fiendfyre Curse",
+    "uso": "Hace fuego maldito"
+  },
+  {
+    "id": 69,
+    "hechizo": "Tarantallegra",
+    "uso": "Obliga al objetivo a bailar"
+  },
+  {
+    "id": 70,
+    "hechizo": "Morsmordre",
+    "uso": "Conjura la Marca Tenebrosa"
+  },
+  {
+    "id": 71,
+    "hechizo": "Sectumsempra",
+    "uso": "Provoca laceraciones graves"
+  },
+  {
+    "id": 72,
+    "hechizo": "Crucio",
+    "uso": "Causa un dolor inmenso"
+  }
+]
