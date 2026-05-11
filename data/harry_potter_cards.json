@@ -135,8 +135,8 @@
   {
     "name": "Orchideous",
     "house": "Hufflepuff",
-    "description": "¡Flores! Durante 3 turnos, el jugador objetivo debe beber 1 trago por no recibir un cumplido.",
-    "houseAdvantage": "Hufflepuffs pueden dar 2 tragos.",
+    "description": "¡Flores! Todos deben decir un cumplido al jugador de la derecha. El jugador activo elige el cumplido menos creativo; el que lo dijo bebe 1 trago.",
+    "houseAdvantage": "Hufflepuffs pueden elegir 2 jugadores objetivo.",
     "isCounter": false
   },
   {
