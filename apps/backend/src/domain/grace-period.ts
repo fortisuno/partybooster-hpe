@@ -1,5 +1,5 @@
-import type { Player } from '@partybooster/shared';
-import { GRACE_PERIOD_MS } from '@partybooster/shared';
+import type { Player } from '@game/shared';
+import { GRACE_PERIOD_MS } from '@game/shared';
 
 export interface GracePeriodManager {
   handleDisconnect(

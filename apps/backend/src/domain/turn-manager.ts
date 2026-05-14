@@ -1,4 +1,4 @@
-import type { GameState, Player } from '@partybooster/shared';
+import type { GameState, Player } from '@game/shared';
 
 export interface TurnManager {
   getRandomStartPlayer(players: Player[]): Player | null;

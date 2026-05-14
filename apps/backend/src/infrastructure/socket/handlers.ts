@@ -1,5 +1,5 @@
 import type { Server, Socket } from 'socket.io';
-import type { House } from '@partybooster/shared';
+import type { House } from '@game/shared';
 import { createDeckManager, drawCard } from '../../domain/deck-manager.js';
 import { createTurnManager } from '../../domain/turn-manager.js';
 import { createRoomManager } from '../../domain/room-manager.js';

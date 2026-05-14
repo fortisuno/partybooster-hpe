@@ -1,5 +1,5 @@
-import type { GameState, Player, House } from '@partybooster/shared';
-import { ROOM_CODE_LENGTH } from '@partybooster/shared';
+import type { GameState, Player, House } from '@game/shared';
+import { ROOM_CODE_LENGTH } from '@game/shared';
 import { ALPHANUMERIC } from '../config/constants.js';
 import { createDeckManager } from './deck-manager.js';
 import { createTurnManager } from './turn-manager.js';
