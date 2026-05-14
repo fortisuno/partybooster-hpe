@@ -1,4 +1,4 @@
-import type { GameState } from '@partybooster/shared';
+import type { GameState } from '@game/shared';
 
 export interface InMemoryStore {
   rooms: Map<string, GameState>;

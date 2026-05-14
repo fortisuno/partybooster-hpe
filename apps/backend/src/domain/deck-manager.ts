@@ -1,5 +1,5 @@
-import type { Card, Deck } from '@partybooster/shared';
-import { buildDeck, shuffle } from '@partybooster/shared';
+import type { Card, Deck } from '@game/shared';
+import { buildDeck, shuffle } from '@game/shared';
 
 export interface DeckManager {
   createDeck(): Deck;

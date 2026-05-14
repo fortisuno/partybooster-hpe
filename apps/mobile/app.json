@@ -1,0 +1,29 @@
+{
+  "name": "partybooster-hpe-mobile",
+  "scheme": "partybooster",
+  "slug": "partybooster-hpe-mobile",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "icon": "./assets/icon.png",
+  "userInterfaceStyle": "dark",
+  "splash": {
+    "image": "./assets/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#09090b"
+  },
+  "assetBundlePatterns": ["**/*"],
+  "ios": {
+    "supportsTablet": false
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#09090b"
+    },
+    "package": "com.partybooster.hpe.mobile"
+  },
+  "plugins": ["expo-router"],
+  "experiments": {
+    "typedRoutes": true
+  }
+}
