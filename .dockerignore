@@ -1,28 +1,27 @@
 # =============================================
-# Dependencies
+# Dependencies & build artifacts
+# (rebuilt inside container; no need to copy)
 # =============================================
 node_modules
 .pnpm-store
-.pnpm
 **/node_modules
 **/.pnpm-store
 
 # =============================================
-# Turborepo / build cache
-# =============================================
-.turbo
-.turbo/**
-.cache
-
-# =============================================
 # Build outputs
+# (TypeScript compiles fresh inside container)
 # =============================================
 dist
 .next
-apps/*/dist
-apps/*/.next
-packages/*/dist
-packages/*/.next
+.turbo
+.turbo/**
+**/dist
+
+# =============================================
+# Git
+# =============================================
+.git
+.gitignore
 
 # =============================================
 # Environment files & secrets
@@ -30,9 +29,6 @@ packages/*/.next
 .env
 .env.*
 .env.local
-.env.development
-.env.production
-.env.test
 *.env
 
 # =============================================
@@ -41,47 +37,35 @@ packages/*/.next
 *.log
 logs
 **/*.log
-npm-debug.log*
-pnpm-debug.log*
 
 # =============================================
-# OS artifacts
+# Operating system artifacts
 # =============================================
 .DS_Store
 Thumbs.db
+
+# =============================================
+# IDE & editor config
+# =============================================
+.vscode
+.idea
 *.swp
 *.swo
 
 # =============================================
-# IDE & editor
+# Documentation & config files
+# (not needed inside the image)
 # =============================================
-.vscode
-.idea
-*.sublime-*
-*.code-workspace
-
-# =============================================
-# Kubernetes secrets (never commit)
-# =============================================
-apps/backend/k8s/k8s.env
-
-# =============================================
-# Documentation (repo root only)
-# =============================================
-README.md
-LICENSE
 *.md
-!packages/**/README.md
+LICENSE
+README*
+docs
 
 # =============================================
-# TypeScript coverage
+# Docker files
+# (source of this image; not needed inside)
 # =============================================
-coverage
-packages/*/coverage
-apps/*/coverage
-
-# =============================================
-# Misc
-# =============================================
-.vercel
-.output
+Dockerfile
+.dockerignore
+docker-compose*.yml
+.docker
