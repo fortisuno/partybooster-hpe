@@ -1,6 +1,5 @@
 import Fastify from 'fastify';
 import { Server } from 'socket.io';
-import { createServer } from 'http';
 import corsPlugin from './config/cors.js';
 import { createInMemoryStore } from './infrastructure/persistence/in-memory-store.js';
 import { createSocketHandlers } from './infrastructure/socket/handlers.js';
@@ -11,9 +10,12 @@ async function bootstrap() {
 
   await fastify.register(corsPlugin);
 
-  const httpServer = createServer(fastify.server);
+  fastify.get('/health', async () => ({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
+  }));
 
-  const io = new Server(httpServer, {
+  const io = new Server(fastify.server, {
     cors: {
       origin: '*',
       methods: ['GET', 'POST'],
@@ -24,9 +26,8 @@ async function bootstrap() {
   const handlers = createSocketHandlers(store, io);
   handlers.registerHandlers(io);
 
-  httpServer.listen(SERVER_PORT, () => {
-    console.log(`Servidor iniciado en el puerto ${SERVER_PORT}`);
-  });
+  await fastify.listen({ port: SERVER_PORT, host: '0.0.0.0' });
+  console.log(`Servidor iniciado en el puerto ${SERVER_PORT}`);
 }
 
 bootstrap().catch((err) => {
