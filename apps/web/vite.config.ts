@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 export default defineConfig({
-  base: '/03-partybooster-hpe/',
+  base: '/',
   plugins: [
     react(),
     VitePWA({
@@ -17,14 +17,16 @@ export default defineConfig({
         theme_color: '#09090b',
         background_color: '#09090b',
         display: 'standalone',
+        start_url: './',
+        scope: './',
         icons: [
           {
-            src: '/icons/icon-192x192.svg',
+            src: './icons/icon-192x192.svg',
             sizes: '192x192',
             type: 'image/svg+xml',
           },
           {
-            src: '/icons/icon-512x512.svg',
+            src: './icons/icon-512x512.svg',
             sizes: '512x512',
             type: 'image/svg+xml',
             purpose: 'any maskable',
