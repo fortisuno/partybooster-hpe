@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Wizard's Duel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+    <style>
+      :root {
+        --gryffindor: #7A1C1C;
+        --gryffindor-gold: #D4A843;
+        --slytherin: #1A472A;
+        --slytherin-silver: #C0C0C0;
+        --ravenclaw: #1A2B5E;
+        --ravenclaw-bronze: #946B2D;
+        --hufflepuff: #D4A843;
+        --hufflepuff-dark: #372E29;
+      }
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+      html, body {
+        margin: 0; padding: 0;
+        background: #0a0c10;
+        min-height: 100dvh;
+        font-family: 'Inter', system-ui, sans-serif;
+        overflow-x: hidden;
+        color: #fff;
+      }
+      #root { min-height: 100dvh; }
+
+      .bg-radial {
+        background: radial-gradient(ellipse at 50% 0%, #1a1d23 0%, #0a0c10 70%);
+      }
+
+      .glass {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .glass-strong {
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .glow-input {
+        transition: box-shadow 0.3s ease;
+      }
+      .glow-input:focus {
+        box-shadow: 0 0 0 1px rgba(212,168,67,0.2), 0 0 20px rgba(212,168,67,0.08);
+      }
+
+      @keyframes glow-pulse {
+        0%, 100% { box-shadow: 0 0 15px rgba(212,168,67,0.15), 0 0 30px rgba(212,168,67,0.05); }
+        50% { box-shadow: 0 0 25px rgba(212,168,67,0.35), 0 0 50px rgba(212,168,67,0.1); }
+      }
+      .glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+
+      @keyframes house-aura {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes card-enter {
+        0% { opacity: 0; transform: scale(0.85) translateY(30px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .card-enter { animation: card-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+      @keyframes draw-btn-enter {
+        0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .draw-btn-enter { animation: draw-btn-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+
+      @keyframes screen-in {
+        0% { opacity: 0; transform: translateY(12px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      .screen-in { animation: screen-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+      @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+
+      .sidebar-overlay {
+        transition: opacity 0.3s ease;
+      }
+
+      .sidebar-panel {
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .scrollbar-thin::-webkit-scrollbar { width: 3px; }
+      .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+      .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 999px; }
+
+      @media (max-width: 430px) {
+        .app-container { max-width: 100%; }
+      }
+
+      input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px #1a1d23 inset !important;
+        -webkit-text-fill-color: #fff !important;
+      }
+
+      .font-display { font-family: 'Cinzel', Georgia, serif; }
+      .font-body { font-family: 'Inter', system-ui, sans-serif; }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gryffindor: { DEFAULT: '#7A1C1C', gold: '#D4A843' },
+              slytherin: { DEFAULT: '#1A472A', silver: '#C0C0C0' },
+              ravenclaw: { DEFAULT: '#1A2B5E', bronze: '#946B2D' },
+              hufflepuff: { DEFAULT: '#D4A843', dark: '#372E29' },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-radial">
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+      const HOUSES = [
+        { id: 'gryffindor', label: 'Gryffindor', primary: '#7A1C1C', accent: '#D4A843' },
+        { id: 'slytherin', label: 'Slytherin', primary: '#1A472A', accent: '#C0C0C0' },
+        { id: 'ravenclaw', label: 'Ravenclaw', primary: '#1A2B5E', accent: '#946B2D' },
+        { id: 'hufflepuff', label: 'Hufflepuff', primary: '#D4A843', accent: '#372E29' },
+      ];
+      const HOUSE_MAP = Object.fromEntries(HOUSES.map(h => [h.id, h]));
+
+      const GAME_CARDS = [
+        {
+          name: 'Expelliarmus',
+          house: 'gryffindor',
+          description: 'Disarm your opponent, forcing them to drop their highest-value card.',
+          effect: 'Opponent discards 1 card at random',
+          advantage: 'Gryffindor courage amplifies this spell. +3 duel power against dark-aligned houses.',
+        },
+        {
+          name: 'Serpensortia',
+          house: 'slytherin',
+          description: 'Conjure a guardian serpent from your wand tip. It intercepts the next incoming spell.',
+          effect: 'Blocks the next attack against you',
+          advantage: 'Slytherin ambition doubles the serpent\'s vigilance. Blocks 2 consecutive attacks.',
+        },
+        {
+          name: 'Wingardium Leviosa',
+          house: 'ravenclaw',
+          description: 'Levitate an object to confuse and distract your opponent during their casting.',
+          effect: 'Skip opponent\'s next action',
+          advantage: 'Ravenclaw precision extends the levitation. Opponent skips 2 actions instead of 1.',
+        },
+        {
+          name: 'Expecto Patronum',
+          house: 'hufflepuff',
+          description: 'Summon a protective Patronus that shields all allies from dark magic.',
+          effect: 'Protects all allies until your next turn',
+          advantage: 'Hufflepuff loyalty strengthens the charm. Also heals 1 HP for each protected ally.',
+        },
+        {
+          name: 'Stupefy',
+          house: 'gryffindor',
+          description: 'A stunning spell that freezes your opponent in place, leaving them vulnerable.',
+          effect: 'Stun opponent for 1 turn',
+          advantage: 'Gryffindor nerve extends the stun duration. Opponent loses 2 turns.',
+        },
+        {
+          name: 'Legilimens',
+          house: 'slytherin',
+          description: 'Briefly enter your opponent\'s mind to glimpse their next move.',
+          effect: 'Reveal opponent\'s hand for 1 turn',
+          advantage: 'Slytherin cunning lets you also swap one card from their hand.',
+        },
+      ];
+
+      const WIZARD_NAMES = ['Harry', 'Draco', 'Luna', 'Cedric', 'Hermione', 'Ron', 'Ginny', 'Neville'];
+      const HOUSE_IDS = ['gryffindor', 'slytherin', 'ravenclaw', 'hufflepuff'];
+
+      function HouseShield({ house, size = 48, active = false }) {
+        const h = HOUSE_MAP[house];
+        if (!h) return null;
+        const s = size;
+        const i = s * 0.3;
+        const cx = s / 2;
+        const cy = s / 2;
+        return (
+          <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} fill="none" aria-label={h.label}>
+            <path d="M${cx} ${s*0.08} L${s*0.15} ${s*0.25} V${s*0.55} Q${s*0.15} ${s*0.75} ${cx} ${s*0.92} Q${s*0.85} ${s*0.75} ${s*0.85} ${s*0.55} V${s*0.25} Z"
+              fill={h.primary} stroke={active ? h.accent : 'rgba(255,255,255,0.15)'} strokeWidth={1.5}
+              {...(active ? { style: { filter: `drop-shadow(0 0 ${s*0.12}px ${h.accent}66)` } } : {})}
+            />
+            <text x={cx} y={cy + i * 0.15} textAnchor="middle" fill={h.accent}
+              fontSize={s * 0.35} fontWeight="700" fontFamily="Cinzel,Georgia,serif">
+              {house === 'gryffindor' ? 'G' : house === 'slytherin' ? 'S' : house === 'ravenclaw' ? 'R' : 'H'}
+            </text>
+          </svg>
+        );
+      }
+
+      function IconCopy({ size = 18 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </svg>
+        );
+      }
+
+      function IconCrown({ size = 16 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" /><path d="M3 20h18" />
+          </svg>
+        );
+      }
+
+      function IconUsers({ size = 18 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        );
+      }
+
+      function IconEdit({ size = 14 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+        );
+      }
+
+      function IconBack({ size = 18 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
+          </svg>
+        );
+      }
+
+      function IconX({ size = 18 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 6L6 18" /><path d="M6 6l12 12" />
+          </svg>
+        );
+      }
+
+      function IconPlay({ size = 18 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none" />
+          </svg>
+        );
+      }
+
+      function IconLogOut({ size = 16 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        );
+      }
+
+      function IconSave({ size = 16 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" /><polyline points="17 21 17 13 7 13 7 21" /><polyline points="7 3 7 8 15 8" />
+          </svg>
+        );
+      }
+
+      function IconWand({ size = 14 }) {
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 4l5 5-5-5z" /><path d="M8 11l5 5-5-5z" /><path d="M3 20l5-5-5 5z" /><path d="M15 4L8 11" /><path d="M13 13l4 4-4-4z" />
+          </svg>
+        );
+      }
+
+      function getRandomCards(count = 6) {
+        return [...GAME_CARDS].sort(() => Math.random() - 0.5).slice(0, count);
+      }
+
+      function Header({ userName, house, onProfileClick, hideEdit }) {
+        return (
+          <header className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 px-4 pt-3">
+            <div className="glass rounded-2xl px-4 py-3 flex items-center justify-between">
+              <button onClick={onProfileClick} className="flex items-center gap-3 group">
+                <div className="transition-transform duration-200 group-active:scale-95">
+                  <HouseShield house={house} size={36} active />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-medium text-white/90">{userName}</span>
+                  {!hideEdit && (
+                    <span className="text-white/30 group-hover:text-white/60 transition-colors">
+                      <IconEdit size={12} />
+                    </span>
+                  )}
+                </div>
+              </button>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-400/70 shadow-[0_0_8px_rgba(52,211,153,0.3)]" />
+                <span className="text-[11px] text-white/40 font-medium tracking-wide">ONLINE</span>
+              </div>
+            </div>
+          </header>
+        );
+      }
+
+      // ── Screen 1: MainMenu ──
+      function MainMenu({ onJoinRoom, onCreateRoom, roomCode, setRoomCode }) {
+        return (
+          <div className="flex flex-col items-center justify-center min-h-screen px-6 pt-24 pb-12 screen-in">
+            <div className="text-center mb-10">
+              <h1 className="font-display text-4xl font-bold tracking-wide text-white">
+                Wizard's
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200/90 to-amber-400/80">Duel</span>
+              </h1>
+              <p className="text-white/30 text-sm mt-3 font-body tracking-wide">
+                The magical card game of strategy &amp; spells
+              </p>
+            </div>
+
+            <div className="w-full max-w-sm space-y-4">
+              <div className="space-y-2">
+                <label className="text-[11px] text-white/40 uppercase tracking-[0.12em] font-medium block">
+                  Enter Room Code
+                </label>
+                <input
+                  value={roomCode}
+                  onChange={e => setRoomCode(e.target.value.toUpperCase())}
+                  placeholder="WZRD-XXXX"
+                  maxLength={9}
+                  className="w-full h-12 px-4 rounded-2xl glass-strong text-white text-sm placeholder:text-white/20
+                    outline-none glow-input transition-all font-body"
+                />
+              </div>
+
+              <button
+                onClick={() => onJoinRoom()}
+                disabled={roomCode.length < 5}
+                className="w-full h-12 rounded-2xl font-medium text-sm tracking-wide transition-all duration-200
+                  active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+                  bg-white/10 hover:bg-white/[0.14] text-white border border-white/10"
+              >
+                Join Room
+              </button>
+
+              <button
+                onClick={onCreateRoom}
+                className="w-full h-11 rounded-2xl font-medium text-sm tracking-wide transition-all duration-200
+                  active:scale-[0.98] text-white/50 hover:text-white/80 border border-white/8
+                  bg-transparent"
+              >
+                Create Room
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // ── Screen 2: WaitingLobby ──
+      function WaitingLobby({ roomCode, players, isHost, onStartGame, onCopyCode, onBack, onLeave, currentUser }) {
+        const [copied, setCopied] = useState(false);
+
+        const handleCopy = () => {
+          navigator.clipboard.writeText(roomCode).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          }).catch(() => {});
+          onCopyCode && onCopyCode();
+        };
+
+        return (
+          <div className="flex flex-col min-h-screen px-5 pt-24 pb-8 screen-in">
+            <button onClick={onBack} className="self-start mb-6 flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors">
+              <IconBack size={16} />
+              <span className="text-xs tracking-wide">Back</span>
+            </button>
+
+            <div className="text-center mb-8">
+              <p className="text-[11px] text-white/30 uppercase tracking-[0.14em] font-medium mb-2">Room Code</p>
+              <div className="flex items-center justify-center gap-3">
+                <span className="font-display text-3xl tracking-[0.15em] text-white/90">{roomCode}</span>
+                <button onClick={handleCopy} className="p-2 rounded-xl glass hover:bg-white/10 transition-all active:scale-90">
+                  {copied ? (
+                    <span className="text-emerald-400 text-xs font-medium">Copied!</span>
+                  ) : (
+                    <span className="text-white/40"><IconCopy size={18} /></span>
+                  )}
+                </button>
+              </div>
+              <p className="text-white/20 text-xs mt-2">Share this code with other wizards</p>
+            </div>
+
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-xs text-white/40 uppercase tracking-[0.1em] font-medium">
+                  Players <span className="text-white/20">({players.length})</span>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                {players.map(p => (
+                  <div key={p.id} className="glass rounded-2xl px-4 py-3.5 flex items-center gap-3">
+                    <HouseShield house={p.house} size={32} active={p.isActive} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-white/90 truncate">{p.name}</span>
+                        {p.isHost && (
+                          <span className="text-amber-400/70" title="Host">
+                            <IconCrown size={14} />
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[11px] text-white/30">{HOUSE_MAP[p.house]?.label}</span>
+                    </div>
+                    {p.id === currentUser?.id && (
+                      <span className="text-[10px] text-white/20 uppercase tracking-wider">You</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-3">
+              {isHost && (
+                <button
+                  onClick={onStartGame}
+                  className="w-full h-12 rounded-2xl font-medium text-sm tracking-wide transition-all duration-200
+                    active:scale-[0.98] glow-pulse
+                    bg-gryffindor-DEFAULT hover:bg-gryffindor-DEFAULT/80 text-white/90 border border-gryffindor-gold/20"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <IconPlay size={16} />
+                    Start Game
+                  </span>
+                </button>
+              )}
+              {!isHost && (
+                <p className="text-center text-xs text-white/20">Waiting for host to start the game…</p>
+              )}
+              <button
+                onClick={onLeave}
+                className="w-full h-10 rounded-2xl text-xs text-white/20 hover:text-white/40 transition-colors"
+              >
+                Leave Room
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // ── Screen 3: ActiveGame ──
+      function ActiveGame({
+        players, currentTurn, isMyTurn, isHost, currentCard, onDrawCard, showSidebar,
+        onToggleSidebar, onLeave, onEndSession, roomCode, currentUser, onCardDrawn,
+      }) {
+        const [cardState, setCardState] = useState(null);
+        const [hasDrawn, setHasDrawn] = useState(false);
+
+        useEffect(() => {
+          if (currentCard) {
+            setCardState({ ...currentCard, key: Date.now() });
+          }
+        }, [currentCard]);
+
+        const handleDraw = () => {
+          const cards = getRandomCards(1);
+          const drawn = cards[0] || GAME_CARDS[Math.floor(Math.random() * GAME_CARDS.length)];
+          setCardState({ ...drawn, key: Date.now() });
+          setHasDrawn(true);
+          onDrawCard && onDrawCard(drawn);
+          onCardDrawn && onCardDrawn();
+        };
+
+        const card = cardState || currentCard;
+        const turnPlayer = players.find(p => p.name === currentTurn);
+
+        return (
+          <div className="flex flex-col min-h-screen pt-20 px-5 pb-6 screen-in">
+            {/* Sidebar overlay and panel */}
+            {showSidebar && (
+              <div className="fixed inset-0 z-40" onClick={onToggleSidebar}>
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm sidebar-overlay" />
+              </div>
+            )}
+            <div className={`fixed top-0 right-0 h-full w-[300px] max-w-[80vw] z-50 sidebar-panel ${showSidebar ? 'translate-x-0' : 'translate-x-full'}`}>
+              <div className="h-full bg-[#0e1017] border-l border-white/[0.06] flex flex-col p-5">
+                <div className="flex items-center justify-between mb-6">
+                  <p className="text-xs text-white/40 uppercase tracking-[0.1em] font-medium">
+                    Players <span className="text-white/20">({players.length})</span>
+                  </p>
+                  <button onClick={onToggleSidebar} className="p-1.5 rounded-lg hover:bg-white/5 transition-colors">
+                    <IconX size={16} className="text-white/30" />
+                  </button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto scrollbar-thin space-y-2">
+                  {players.map(p => (
+                    <div key={p.id} className={`rounded-2xl px-4 py-3 flex items-center gap-3 transition-all ${
+                      p.name === currentTurn
+                        ? 'bg-white/8 border border-white/10'
+                        : 'glass'
+                    }`}>
+                      <HouseShield house={p.house} size={28} active={p.name === currentTurn} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-sm truncate ${p.name === currentTurn ? 'text-white font-medium' : 'text-white/60'}`}>
+                            {p.name}
+                          </span>
+                          {p.name === currentTurn && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shadow-[0_0_6px_rgba(251,191,36,0.4)]" />
+                          )}
+                        </div>
+                        <span className="text-[10px] text-white/20">{HOUSE_MAP[p.house]?.label}</span>
+                      </div>
+                      {p.isHost && <IconCrown size={12} className="text-amber-400/50" />}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-white/25 uppercase tracking-[0.08em]">Invite Code</span>
+                    <span className="font-display text-sm tracking-wider text-white/50">{roomCode}</span>
+                  </div>
+                  {isHost ? (
+                    <button onClick={onEndSession}
+                      className="w-full h-10 rounded-2xl text-xs text-red-400/50 hover:text-red-400/80 transition-colors
+                        border border-red-400/10">
+                      End Session
+                    </button>
+                  ) : (
+                    <button onClick={onLeave}
+                      className="w-full h-10 rounded-2xl text-xs text-white/20 hover:text-white/40 transition-colors
+                        border border-white/10">
+                      Leave Room
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Top bar: player counter */}
+            <div className="flex justify-end mb-6">
+              <button onClick={onToggleSidebar}
+                className="glass rounded-xl px-3.5 py-2 flex items-center gap-2 active:scale-95 transition-all">
+                <IconUsers size={15} className="text-white/40" />
+                <span className="text-sm text-white/60">{players.length}</span>
+                <span className="text-[10px] text-white/20">
+                  {players.filter(p => p.name === currentTurn).length > 0 ? '●' : '○'}
+                </span>
+              </button>
+            </div>
+
+            {/* Current turn indicator */}
+            <div className="text-center mb-8">
+              <p className="text-[10px] text-white/25 uppercase tracking-[0.15em] font-medium mb-1.5">Current Turn</p>
+              <div className="flex items-center justify-center gap-2.5">
+                {turnPlayer && <HouseShield house={turnPlayer.house} size={24} active />}
+                <span className="font-display text-lg text-white/80">{currentTurn}</span>
+              </div>
+              <div className="w-16 h-[2px] mx-auto mt-2 rounded-full bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
+            </div>
+
+            {/* Card display area */}
+            <div className="flex-1 flex flex-col items-center justify-center -mt-4">
+              {card ? (
+                <div key={card.key} className="w-full max-w-xs card-enter">
+                  <div className="glass-strong rounded-3xl p-6 border border-white/[0.08] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-[3px]"
+                      style={{ background: `linear-gradient(90deg, ${HOUSE_MAP[card.house]?.primary}, ${HOUSE_MAP[card.house]?.accent})` }}
+                    />
+
+                    <div className="flex items-center justify-between mb-5 mt-1">
+                      <HouseShield house={card.house} size={36} active />
+                      <span className="text-[10px] text-white/20 uppercase tracking-[0.12em] font-medium"
+                        style={{ color: `${HOUSE_MAP[card.house]?.accent}99` }}>
+                        {HOUSE_MAP[card.house]?.label}
+                      </span>
+                    </div>
+
+                    <h2 className="font-display text-xl font-bold text-white mb-3 leading-snug">
+                      {card.name}
+                    </h2>
+
+                    <p className="text-sm text-white/50 leading-relaxed mb-5 font-body">
+                      {card.description}
+                    </p>
+
+                    <div className="glass rounded-2xl px-4 py-3 mb-4">
+                      <p className="text-[10px] text-white/25 uppercase tracking-[0.1em] font-medium mb-1.5">Effect</p>
+                      <p className="text-sm text-white/70 font-body">{card.effect}</p>
+                    </div>
+
+                    <div className="rounded-2xl px-4 py-3 border border-dashed"
+                      style={{ borderColor: `${HOUSE_MAP[card.house]?.accent}33`, background: `${HOUSE_MAP[card.house]?.accent}08` }}>
+                      <p className="text-[10px] uppercase tracking-[0.1em] font-medium mb-1"
+                        style={{ color: `${HOUSE_MAP[card.house]?.accent}AA` }}>
+                        House Advantage
+                      </p>
+                      <p className="text-xs leading-relaxed font-body"
+                        style={{ color: `${HOUSE_MAP[card.house]?.accent}BB` }}>
+                        {card.advantage}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <p className="text-white/15 text-sm font-body">No card yet</p>
+                  <p className="text-white/10 text-xs mt-1 font-body">Draw to begin the duel</p>
+                </div>
+              )}
+
+              {/* Draw button */}
+              {isMyTurn && (
+                <div className="mt-6 draw-btn-enter">
+                  <button onClick={handleDraw}
+                    className="w-20 h-20 rounded-full glass-strong flex items-center justify-center
+                      active:scale-90 transition-all duration-200
+                      border border-white/10 hover:border-white/20
+                      shadow-[0_0_30px_rgba(212,168,67,0.08)] hover:shadow-[0_0_40px_rgba(212,168,67,0.15)]">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"
+                      strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 5v14" /><path d="M5 12l7-7 7 7" />
+                    </svg>
+                  </button>
+                  <p className="text-center text-[10px] text-white/20 mt-2 uppercase tracking-[0.1em]">Draw</p>
+                </div>
+              )}
+            </div>
+
+            {/* End-game state display */}
+            {hasDrawn && card && !isMyTurn && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-white/30 font-body">Waiting for {currentTurn}'s move…</p>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      // ── Screen 4: ProfileEditor ──
+      function ProfileEditor({ userName, setUserName, house, setHouse, onSave, onBack }) {
+        const [name, setName] = useState(userName);
+        const [selectedHouse, setSelectedHouse] = useState(house);
+        const hasChanges = name !== userName || selectedHouse !== house;
+
+        const handleSave = () => {
+          setUserName(name);
+          setHouse(selectedHouse);
+          onSave && onSave();
+        };
+
+        return (
+          <div className="flex flex-col min-h-screen px-5 pt-24 pb-8 screen-in">
+            <button onClick={onBack} className="self-start mb-8 flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors">
+              <IconBack size={16} />
+              <span className="text-xs tracking-wide">Back</span>
+            </button>
+
+            <div className="flex-1 max-w-sm mx-auto w-full">
+              <h2 className="font-display text-2xl font-bold text-white/90 mb-2">Edit Profile</h2>
+              <p className="text-xs text-white/30 mb-8 font-body">Your wizard identity in the arena</p>
+
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[11px] text-white/40 uppercase tracking-[0.12em] font-medium block">
+                    Wizard Name
+                  </label>
+                  <input
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Your wizard name"
+                    maxLength={20}
+                    className="w-full h-12 px-4 rounded-2xl glass-strong text-white text-sm placeholder:text-white/20
+                      outline-none glow-input transition-all font-body"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[11px] text-white/40 uppercase tracking-[0.12em] font-medium block">
+                    Your House
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {HOUSES.map(h => {
+                      const isSelected = selectedHouse === h.id;
+                      return (
+                        <button
+                          key={h.id}
+                          onClick={() => setSelectedHouse(h.id)}
+                          className={`relative rounded-2xl p-4 flex flex-col items-center gap-2 transition-all duration-200
+                            active:scale-[0.97] ${isSelected ? 'glass-strong border-0' : 'glass border border-transparent'}`}
+                          style={isSelected ? {
+                            background: `linear-gradient(135deg, ${h.primary}22, ${h.accent}11)`,
+                            boxShadow: `0 0 0 1.5px ${h.accent}44, 0 0 20px ${h.accent}15`,
+                          } : {}}
+                        >
+                          <HouseShield house={h.id} size={40} active={isSelected} />
+                          <span className="text-xs font-medium" style={{ color: isSelected ? h.accent : 'rgba(255,255,255,0.4)' }}>
+                            {h.label}
+                          </span>
+                          {isSelected && (
+                            <div className="absolute -inset-0.5 rounded-2xl -z-10 opacity-60"
+                              style={{
+                                background: `linear-gradient(135deg, ${h.accent}, ${h.primary}, ${h.accent})`,
+                                backgroundSize: '200% 200%',
+                                animation: 'house-aura 3s ease-in-out infinite',
+                                filter: 'blur(8px)',
+                              }}
+                            />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 space-y-3">
+              <button
+                onClick={handleSave}
+                disabled={!hasChanges}
+                className="w-full h-12 rounded-2xl font-medium text-sm tracking-wide transition-all duration-200
+                  active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed
+                  bg-white/10 hover:bg-white/[0.14] text-white/80 disabled:text-white/20 border border-white/10 disabled:border-white/5
+                  flex items-center justify-center gap-2"
+              >
+                <IconSave size={16} />
+                Save Changes
+              </button>
+              <button onClick={onBack}
+                className="w-full h-10 rounded-2xl text-xs text-white/20 hover:text-white/40 transition-colors">
+                Cancel
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // ── App ──
+      function App() {
+        const [screen, setScreen] = useState('menu');
+        const [prevScreen, setPrevScreen] = useState(null);
+        const [userName, setUserName] = useState('Harry');
+        const [house, setHouse] = useState('gryffindor');
+        const [roomCode, setRoomCode] = useState('');
+
+        const [players, setPlayers] = useState([]);
+        const [isHost, setIsHost] = useState(false);
+        const [currentTurn, setCurrentTurn] = useState('');
+        const [isMyTurn, setIsMyTurn] = useState(false);
+        const [currentCard, setCurrentCard] = useState(null);
+        const [showSidebar, setShowSidebar] = useState(false);
+
+        const currentUser = useMemo(() => ({
+          id: 1, name: userName, house: house, isHost: isHost,
+        }), [userName, house, isHost]);
+
+        const navigate = useCallback((to) => {
+          setPrevScreen(screen);
+          setScreen(to);
+          setShowSidebar(false);
+        }, [screen]);
+
+        const handleCreateRoom = useCallback(() => {
+          const code = 'WZRD-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+          setRoomCode(code);
+          setIsHost(true);
+          const demoPlayers = [
+            { id: 1, name: userName, house: house, isHost: true, isActive: true },
+            { id: 2, name: 'Draco', house: 'slytherin', isHost: false, isActive: false },
+            { id: 3, name: 'Luna', house: 'ravenclaw', isHost: false, isActive: false },
+            { id: 4, name: 'Cedric', house: 'hufflepuff', isHost: false, isActive: false },
+          ];
+          setPlayers(demoPlayers);
+          navigate('lobby');
+        }, [userName, house, navigate]);
+
+        const handleJoinRoom = useCallback(() => {
+          if (roomCode.length < 5) return;
+          setIsHost(false);
+          const demoPlayers = [
+            { id: 1, name: 'Harry', house: 'gryffindor', isHost: true, isActive: true },
+            { id: 2, name: userName, house: house, isHost: false, isActive: false },
+            { id: 3, name: 'Luna', house: 'ravenclaw', isHost: false, isActive: false },
+            { id: 4, name: 'Cedric', house: 'hufflepuff', isHost: false, isActive: false },
+          ];
+          setPlayers(demoPlayers);
+          navigate('lobby');
+        }, [roomCode, userName, house, navigate]);
+
+        const handleStartGame = useCallback(() => {
+          setIsMyTurn(true);
+          setCurrentTurn(userName);
+          navigate('game');
+        }, [userName, navigate]);
+
+        const handleDrawCard = useCallback((drawn) => {
+          setCurrentCard(drawn);
+          setTimeout(() => {
+            setIsMyTurn(false);
+            const others = players.filter(p => p.name !== currentUser.name);
+            if (others.length > 0) {
+              const next = others[Math.floor(Math.random() * others.length)];
+              setCurrentTurn(next.name);
+            }
+          }, 1500);
+        }, [players, currentUser]);
+
+        const handleEndSession = useCallback(() => {
+          setShowSidebar(false);
+          navigate('menu');
+        }, [navigate]);
+
+        const renderScreen = () => {
+          switch (screen) {
+            case 'menu':
+              return (
+                <MainMenu
+                  roomCode={roomCode}
+                  setRoomCode={setRoomCode}
+                  onJoinRoom={handleJoinRoom}
+                  onCreateRoom={handleCreateRoom}
+                />
+              );
+            case 'lobby':
+              return (
+                <WaitingLobby
+                  roomCode={roomCode}
+                  players={players}
+                  isHost={isHost}
+                  currentUser={currentUser}
+                  onStartGame={handleStartGame}
+                  onCopyCode={() => {}}
+                  onBack={() => navigate('menu')}
+                  onLeave={() => navigate('menu')}
+                />
+              );
+            case 'game':
+              return (
+                <ActiveGame
+                  players={players}
+                  currentTurn={currentTurn}
+                  isMyTurn={isMyTurn}
+                  isHost={isHost}
+                  currentCard={currentCard}
+                  onDrawCard={handleDrawCard}
+                  onCardDrawn={() => {}}
+                  showSidebar={showSidebar}
+                  onToggleSidebar={() => setShowSidebar(s => !s)}
+                  onLeave={() => navigate('menu')}
+                  onEndSession={handleEndSession}
+                  roomCode={roomCode}
+                  currentUser={currentUser}
+                />
+              );
+            case 'profile':
+              return (
+                <ProfileEditor
+                  userName={userName}
+                  setUserName={setUserName}
+                  house={house}
+                  setHouse={setHouse}
+                  onSave={() => navigate(prevScreen || 'menu')}
+                  onBack={() => navigate(prevScreen || 'menu')}
+                />
+              );
+            default:
+              return null;
+          }
+        };
+
+        return (
+          <div className="min-h-screen max-w-[430px] mx-auto relative">
+            {screen !== 'profile' && (
+              <Header
+                userName={userName}
+                house={house}
+                onProfileClick={() => navigate('profile')}
+                hideEdit={false}
+              />
+            )}
+            {screen === 'profile' && (
+              <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 px-4 pt-3">
+                <div className="glass rounded-2xl px-4 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <HouseShield house={house} size={36} active />
+                    <span className="text-sm font-medium text-white/90">{userName}</span>
+                  </div>
+                  <div className="w-2 h-2 rounded-full bg-emerald-400/70 shadow-[0_0_8px_rgba(52,211,153,0.3)]" />
+                </div>
+              </div>
+            )}
+            {renderScreen()}
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

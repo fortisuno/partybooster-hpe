@@ -1,0 +1,71 @@
+# =============================================
+# Dependencies & build artifacts
+# (rebuilt inside container; no need to copy)
+# =============================================
+node_modules
+.pnpm-store
+**/node_modules
+**/.pnpm-store
+
+# =============================================
+# Build outputs
+# (TypeScript compiles fresh inside container)
+# =============================================
+dist
+.next
+.turbo
+.turbo/**
+**/dist
+
+# =============================================
+# Git
+# =============================================
+.git
+.gitignore
+
+# =============================================
+# Environment files & secrets
+# =============================================
+.env
+.env.*
+.env.local
+*.env
+
+# =============================================
+# Logs
+# =============================================
+*.log
+logs
+**/*.log
+
+# =============================================
+# Operating system artifacts
+# =============================================
+.DS_Store
+Thumbs.db
+
+# =============================================
+# IDE & editor config
+# =============================================
+.vscode
+.idea
+*.swp
+*.swo
+
+# =============================================
+# Documentation & config files
+# (not needed inside the image)
+# =============================================
+*.md
+LICENSE
+README*
+docs
+
+# =============================================
+# Docker files
+# (source of this image; not needed inside)
+# =============================================
+Dockerfile
+.dockerignore
+docker-compose*.yml
+.docker
