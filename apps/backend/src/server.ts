@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import { Server } from 'socket.io';
-import corsPlugin from './config/cors.js';
+import corsPlugin, { ALLOWED_ORIGINS } from './config/cors.js';
 import { createInMemoryStore } from './infrastructure/persistence/in-memory-store.js';
 import { createSocketHandlers } from './infrastructure/socket/handlers.js';
 import { SERVER_PORT } from './config/constants.js';
@@ -18,22 +18,30 @@ async function bootstrap() {
 
   await fastify.register(corsPlugin);
 
-  fastify.get('/health', async () => ({
-    status: 'ok',
-    uptime: Math.floor(process.uptime()),
-  }));
+  const store = createInMemoryStore();
 
   const io = new Server(fastify.server, {
     cors: {
-      origin: true,
+      origin: ALLOWED_ORIGINS,
       methods: ['GET', 'POST'],
       credentials: true,
     },
   });
 
-  const store = createInMemoryStore();
   const handlers = createSocketHandlers(store, io);
   handlers.registerHandlers(io);
+
+  fastify.get('/health', async () => ({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
+  }));
+
+  fastify.post('/admin/reset', async (_req, reply) => {
+    store.rooms.clear();
+    store.playerToRoom.clear();
+    store.socketToPlayer.clear();
+    return reply.send({ status: 'reset', rooms: 0, players: 0 });
+  });
 
   await fastify.listen({ port: SERVER_PORT, host: '0.0.0.0' });
   console.log(`Servidor iniciado en el puerto ${SERVER_PORT}`);

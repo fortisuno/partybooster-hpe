@@ -39,11 +39,11 @@ export function MagicCard({ card, className }: MagicCardProps) {
       exit="exit"
       whileHover="hover"
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-      className={className}
+      className={`w-full max-w-xs mx-auto ${className || ''}`}
     >
       <motion.div
         variants={hoverVariants}
-        className="rounded-3xl glass-strong border border-white/[0.08] relative overflow-hidden p-6"
+        className="w-full rounded-3xl glass-strong border border-white/[0.08] relative overflow-hidden p-6"
       >
         <div
           className="absolute top-0 left-0 right-0 h-[3px]"

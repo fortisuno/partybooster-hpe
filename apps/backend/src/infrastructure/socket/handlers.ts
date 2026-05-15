@@ -49,6 +49,23 @@ export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHa
 
   async function handleJoinRoom(socket: Socket, payload: unknown) {
     try {
+      const existingPlayerId = store.socketToPlayer.get(socket.id);
+      if (existingPlayerId) {
+        const existingRoomCode = store.playerToRoom.get(existingPlayerId);
+        if (existingRoomCode) {
+          const existingGameState = store.rooms.get(existingRoomCode);
+          const existingPlayer = existingGameState?.players.find((p) => p.id === existingPlayerId);
+          if (existingPlayer) {
+            socket.emit('room:joined', {
+              roomCode: existingRoomCode,
+              playerId: existingPlayerId,
+              gameState: existingGameState,
+            });
+            return;
+          }
+        }
+      }
+
       const { roomCode, name, house } = payload as { roomCode: string; name: string; house: House };
       const gameState = store.rooms.get(roomCode);
 
