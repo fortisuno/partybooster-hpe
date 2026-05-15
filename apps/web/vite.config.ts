@@ -4,28 +4,29 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 export default defineConfig({
+  base: '/03-partybooster-hpe/',
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/*.png'],
+      includeAssets: ['icons/*.svg'],
       manifest: {
-        name: 'Harry Potter Card Game',
-        short_name: 'HPE',
-        description: 'Real-time multiplayer Harry Potter card game',
+        name: 'Accio Trago',
+        short_name: 'Accio',
+        description: 'Juego de cartas multiplayer de Harry Potter',
         theme_color: '#09090b',
         background_color: '#09090b',
         display: 'standalone',
         icons: [
           {
-            src: '/icons/icon-192x192.png',
+            src: '/icons/icon-192x192.svg',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/svg+xml',
           },
           {
-            src: '/icons/icon-512x512.png',
+            src: '/icons/icon-512x512.svg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any maskable',
           },
         ],

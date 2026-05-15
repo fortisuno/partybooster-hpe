@@ -39,7 +39,7 @@ export default function Home() {
 
   const isValid = name.trim().length > 0 && selectedHouse !== null && (tab === 'create' || roomCode.trim().length > 0);
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'https://api-partybooster-hpe.rehiletehvac.com';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
   return (
     <MobileLayout>

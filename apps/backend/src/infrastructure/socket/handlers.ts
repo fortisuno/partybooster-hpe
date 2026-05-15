@@ -284,7 +284,6 @@ export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHa
 
       player.offline = false;
       store.socketToPlayer.set(socket.id, playerId);
-      gracePeriodManager.handleReconnect(playerId);
 
       socket.emit('room:rejoined', { roomCode, playerId, gameState });
       socket.join(roomCode);

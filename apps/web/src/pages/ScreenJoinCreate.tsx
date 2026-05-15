@@ -59,7 +59,7 @@ export function ScreenJoinCreate() {
             </span>
           </h1>
           <p className="text-white/30 text-sm mt-3 font-body tracking-wide italic">
-            ¡Por qué conformarse con una fiesta común cuando puedes tener una mágica!
+            Travesura realizada... y trago fondo
           </p>
         </div>
 
