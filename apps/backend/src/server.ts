@@ -5,6 +5,14 @@ import { createInMemoryStore } from './infrastructure/persistence/in-memory-stor
 import { createSocketHandlers } from './infrastructure/socket/handlers.js';
 import { SERVER_PORT } from './config/constants.js';
 
+process.on('uncaughtException', (err) => {
+  console.error('Excepción no capturada:', err);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Rechazo no manejado:', reason);
+});
+
 async function bootstrap() {
   const fastify = Fastify();
 
@@ -17,8 +25,9 @@ async function bootstrap() {
 
   const io = new Server(fastify.server, {
     cors: {
-      origin: '*',
+      origin: true,
       methods: ['GET', 'POST'],
+      credentials: true,
     },
   });
 
