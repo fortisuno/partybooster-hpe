@@ -23,7 +23,7 @@ jobs:
       - name: Check for changeset label
         id: label
         run: |
-          HAS_LABEL=$(jq 'any(.name == "changeset"; .)' <<< '${{ toJSON(github.event.pull_request.labels) }}')
+          HAS_LABEL=$(jq -e 'any(.[] | .name == "changeset"; .)' <<< '${{ toJSON(github.event.pull_request.labels) }}' && echo 'true' || echo 'false')
           echo "has_label=$HAS_LABEL" >> $GITHUB_OUTPUT
 
       - name: Fail if no changeset
