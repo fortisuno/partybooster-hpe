@@ -3,9 +3,8 @@ import type { House } from '@game/shared';
 import { createDeckManager, drawCard } from '../../domain/deck-manager.js';
 import { createTurnManager } from '../../domain/turn-manager.js';
 import { createRoomManager } from '../../domain/room-manager.js';
-import { createGracePeriodManager } from '../../domain/grace-period.js';
 import type { InMemoryStore } from '../persistence/in-memory-store.js';
-import { emitError } from './error-wrapper.js';
+import { emitError, withErrorWrapper } from './error-wrapper.js';
 
 export interface SocketHandlers {
   registerHandlers(io: Server): void;
@@ -14,7 +13,6 @@ export interface SocketHandlers {
 export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHandlers {
   const roomManager = createRoomManager();
   const turnManager = createTurnManager();
-  const gracePeriodManager = createGracePeriodManager();
 
   function getPlayerFromSocket(
     socket: Socket
@@ -215,6 +213,53 @@ export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHa
     }
   }
 
+  async function handleLeaveRoom(socket: Socket) {
+    try {
+      const lookup = getPlayerFromSocket(socket);
+      if (!lookup) {
+        socket.emit('room:left');
+        return;
+      }
+
+      const { playerId, roomCode } = lookup;
+      const gameState = store.rooms.get(roomCode);
+
+      if (!gameState) {
+        socket.emit('room:left');
+        return;
+      }
+
+      const { players: updatedPlayers, newHostId } = roomManager.removePlayer(gameState.players, playerId);
+
+      store.playerToRoom.delete(playerId);
+      store.socketToPlayer.delete(socket.id);
+      socket.leave(roomCode);
+
+      if (updatedPlayers.length === 0) {
+        store.rooms.delete(roomCode);
+        socket.emit('room:left');
+        return;
+      }
+
+      const updatedGameState: typeof gameState = {
+        ...gameState,
+        players: updatedPlayers,
+      };
+      store.rooms.set(roomCode, updatedGameState);
+
+      io.to(roomCode).emit('player:left', { playerId });
+
+      if (newHostId) {
+        io.to(roomCode).emit('host:changed', { newHostId });
+      }
+
+      socket.emit('room:left');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Error interno del servidor';
+      socket.emit('error', { message });
+    }
+  }
+
   async function handleReconnect(socket: Socket, payload: unknown) {
     try {
       const { playerId } = payload as { playerId: string };
@@ -239,9 +284,8 @@ export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHa
 
       player.offline = false;
       store.socketToPlayer.set(socket.id, playerId);
-      gracePeriodManager.handleReconnect(playerId);
 
-      socket.emit('room:joined', { roomCode, playerId, gameState });
+      socket.emit('room:rejoined', { roomCode, playerId, gameState });
       socket.join(roomCode);
       io.to(roomCode).emit('player:reconnected', { playerId });
     } catch (err) {
@@ -252,12 +296,13 @@ export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHa
 
   function registerHandlers(_io: Server): void {
     io.on('connection', (socket: Socket) => {
-      socket.on('room:create', handleCreateRoom);
-      socket.on('room:join', handleJoinRoom);
-      socket.on('game:start', handleStartGame);
-      socket.on('game:draw', handleDrawCard);
-      socket.on('game:terminate', handleTerminateSession);
-      socket.on('player:reconnect', handleReconnect);
+      socket.on('room:create', (payload) => withErrorWrapper(handleCreateRoom)(socket, payload));
+      socket.on('room:join', (payload) => withErrorWrapper(handleJoinRoom)(socket, payload));
+      socket.on('room:leave', () => withErrorWrapper(handleLeaveRoom)(socket));
+      socket.on('game:start', () => withErrorWrapper(handleStartGame)(socket));
+      socket.on('game:draw', () => withErrorWrapper(handleDrawCard)(socket));
+      socket.on('game:terminate', () => withErrorWrapper(handleTerminateSession)(socket));
+      socket.on('player:reconnect', (payload) => withErrorWrapper(handleReconnect)(socket, payload));
       socket.on('disconnect', (reason: string) => {
         const playerId = store.socketToPlayer.get(socket.id);
         if (!playerId) return;
@@ -271,40 +316,43 @@ export function createSocketHandlers(store: InMemoryStore, io: Server): SocketHa
         const gameState = store.rooms.get(roomCode);
         if (!gameState) {
           store.socketToPlayer.delete(socket.id);
+          store.playerToRoom.delete(playerId);
           return;
         }
 
         const player = gameState.players.find((p) => p.id === playerId);
-        if (player) {
-          player.offline = true;
+        if (!player) {
+          store.socketToPlayer.delete(socket.id);
+          store.playerToRoom.delete(playerId);
+          return;
         }
 
-        gracePeriodManager.handleDisconnect(playerId, roomCode, () => {
-          const currentState = store.rooms.get(roomCode);
-          if (!currentState) return;
+        const { players: updatedPlayers, newHostId } = roomManager.removePlayer(gameState.players, playerId);
 
-          const targetPlayer = currentState.players.find((p) => p.id === playerId);
-          if (!targetPlayer) return;
-
-          if (targetPlayer.isHost) {
-            io.to(roomCode).emit('session:terminated');
-            io.in(roomCode).disconnectSockets(true);
-            store.rooms.delete(roomCode);
-            for (const [pid, code] of store.playerToRoom) {
-              if (code === roomCode) store.playerToRoom.delete(pid);
-            }
-          } else {
-            const updatedPlayers = currentState.players.filter(
-              (p) => p.id !== playerId
-            );
-            store.rooms.set(roomCode, { ...currentState, players: updatedPlayers });
-            io.to(roomCode).emit('player:left', { playerId });
+        if (updatedPlayers.length === 0) {
+          store.rooms.delete(roomCode);
+          for (const [pid, code] of store.playerToRoom) {
+            if (code === roomCode) store.playerToRoom.delete(pid);
           }
-
+          store.socketToPlayer.delete(socket.id);
           store.playerToRoom.delete(playerId);
-        });
+          return;
+        }
 
-        io.to(roomCode).emit('player:offline', { playerId });
+        const updatedGameState: typeof gameState = {
+          ...gameState,
+          players: updatedPlayers,
+        };
+        store.rooms.set(roomCode, updatedGameState);
+
+        io.to(roomCode).emit('player:left', { playerId });
+
+        if (newHostId) {
+          io.to(roomCode).emit('host:changed', { newHostId });
+        }
+
+        store.playerToRoom.delete(playerId);
+        store.socketToPlayer.delete(socket.id);
       });
     });
   }
