@@ -9,6 +9,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'auto',
       includeAssets: ['icons/*.svg'],
       manifest: {
         name: 'Accio Trago',
@@ -19,6 +20,8 @@ export default defineConfig({
         display: 'standalone',
         start_url: './',
         scope: './',
+        lang: 'es',
+        categories: ['games', 'entertainment'],
         icons: [
           {
             src: './icons/icon-192x192.svg',
