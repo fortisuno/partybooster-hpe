@@ -1,534 +1,333 @@
 [
   {
-    "name": "Impervius",
-    "house": "Gryffindor",
-    "description": "¡Protección! Durante los próximos 3 turnos, eres inmune a los efectos negativos de otras cartas.",
-    "houseAdvantage": "Gryffindors ganan 1 turno adicional de inmunidad.",
+    "name": "Incarcarous",
+    "house": "Ravenclaw",
+    "description": "¡Atadura! Durante 3 turnos, obliga a los magos a atar sus manos.  Todos participan; el que no ate sus manos, bebe 1 trago.",
+    "houseAdvantage": "Ravenclaws pueden eximirse de la atadura",
+    "isCounter": false
+  },
+  {
+    "name": "Muffliato",
+    "house": "Ravenclaw",
+    "description": "¡Silencio! Durante 3 turnos, no se puede hablar en voz alta. Si algun mago habla en voz alta, bebe 1 trago.",
+    "houseAdvantage": "Ravenclaws pueden hablar en voz alta.",
     "isCounter": true
   },
   {
-    "name": "Riddikulus",
-    "house": "Gryffindor",
-    "description": "¡Boggart! Haz la cara más ridícula durante 3 turnos. Todos los jugadores participan; el primero en reírse debe beber 1 trago.",
-    "houseAdvantage": "Gryffindors eligen quién bebe el trago.",
-    "isCounter": false
-  },
-  {
-    "name": "Protego",
-    "house": "Gryffindor",
-    "description": "¡Escudo! Anula el efecto de cualquier carta de hechizo jugada contra ti durante los próximos 3 turnos.",
-    "houseAdvantage": "Refleja el hechizo hacia quien lo lanzó.",
-    "isCounter": true
-  },
-  {
-    "name": "Expelliarmus",
-    "house": "Gryffindor",
-    "description": "¡Desarme! El jugador objetivo no puede usar cartas durante 3 turnos y debe beber 1 trago.",
-    "houseAdvantage": "El objetivo bebe 2 tragos en su lugar.",
-    "isCounter": true
-  },
-  {
-    "name": "Expecto Patronum",
-    "house": "Gryffindor",
-    "description": "¡Patronus! Durante 3 turnos, protege a todos los jugadores de tu mesa de cartas de Slytherin.",
-    "houseAdvantage": "Todos los Gryffindors en la mesa quedan protegidos automáticamente.",
-    "isCounter": true
-  },
-  {
-    "name": "Finite Incantatem",
-    "house": "Gryffindor",
-    "description": "¡Fin! Anula los efectos activos de cualquier carta de hechizo en juego durante 3 turnos.",
-    "houseAdvantage": "Puedes elegir qué carta anular sin importar quién la lanzó.",
-    "isCounter": true
-  },
-  {
-    "name": "Stupefy",
-    "house": "Gryffindor",
-    "description": "¡Aturdidor! El jugador objetivo queda paralizado y no puede jugar cartas durante 3 turnos.",
-    "houseAdvantage": "Gryffindors pueden extender la parálisis a un turno más.",
-    "isCounter": true
-  },
-  {
-    "name": "Impedimenta",
-    "house": "Gryffindor",
-    "description": "¡Congelar! El jugador objetivo no puede realizar acciones físicas durante 3 turnos.",
-    "houseAdvantage": "Gryffindors pueden obligar al objetivo a beber 1 trago.",
-    "isCounter": true
-  },
-  {
-    "name": "Cave Inimicum",
-    "house": "Gryffindor",
-    "description": "¡Defensa! Durante 3 turnos, estás protegido de todas las cartas de Slytherin jugadas contra ti.",
-    "houseAdvantage": "Los Slytherin que intenten atacarte deben beber 1 trago.",
-    "isCounter": true
-  },
-  {
-    "name": "Piertotum Locomotor",
-    "house": "Gryffindor",
-    "description": "¡Estatuas! Todos deben posar como estatuas durante 3 turnos. Todos participan; el primero en moverse bebe 1 trago.",
-    "houseAdvantage": "Gryffindors no necesitan posar.",
-    "isCounter": false
-  },
-  {
-    "name": "Liberacorpus",
-    "house": "Gryffindor",
-    "description": "¡Liberación! El jugador objetivo puede sentarse o moverse libremente durante los próximos 3 turnos.",
-    "houseAdvantage": "Tú también recibes el beneficio de movimiento.",
-    "isCounter": false
-  },
-  {
-    "name": "Relashio",
-    "house": "Gryffindor",
-    "description": "¡Soltar! Durante 3 turnos, el jugador objetivo debe dejar caer cualquier objeto que sostenga o beber 1 trago.",
-    "houseAdvantage": "Gryffindors obligan al objetivo a beber 2 tragos en su lugar.",
-    "isCounter": true
-  },
-  {
-    "name": "Rictusempra",
-    "house": "Gryffindor",
-    "description": "¡Cosquillas! Durante 3 turnos, el jugador objetivo no puede dejar de reír y debe beber 1 trago.",
-    "houseAdvantage": "Gryffindors pueden forzar 2 tragos.",
-    "isCounter": true
-  },
-  {
-    "name": "Aguamenti",
-    "house": "Gryffindor",
-    "description": "¡Agua! Durante 3 turnos, el jugador objetivo debe rellenar su vaso cada vez que beba.",
-    "houseAdvantage": "Gryffindors pueden rellenar el vaso del objetivo con tu bebida.",
-    "isCounter": false
-  },
-  {
-    "name": "Expulso",
-    "house": "Gryffindor",
-    "description": "¡Expulsión! Durante 3 turnos, el jugador objetivo debe abandonar la mesa o beber 2 tragos.",
-    "houseAdvantage": "Gryffindors pueden elegir a quién expulsar.",
-    "isCounter": true
-  },
-  {
-    "name": "Glisseo",
-    "house": "Gryffindor",
-    "description": "¡Tobogán! Durante 3 turnos, todos deben intentar deslizarse. Todos participan; el que se caiga bebe 1 trago.",
-    "houseAdvantage": "Gryffindors están exentos del reto.",
-    "isCounter": false
-  },
-  {
-    "name": "Reparo",
-    "house": "Gryffindor",
-    "description": "¡Reparación! Durante 3 turnos, fuerza al jugador objetivo a beber 1 trago para 'reparar' su error.",
-    "houseAdvantage": "Gryffindors pueden forzar 2 tragos.",
-    "isCounter": true
-  },
-  {
-    "name": "Episkey",
-    "house": "Gryffindor",
-    "description": "¡Curación! Durante 3 turnos, fuerza al jugador objetivo a beber 1 trago para 'curar' su error.",
-    "houseAdvantage": "Gryffindors pueden curar a dos personas a la vez.",
-    "isCounter": true
-  },
-  {
-    "name": "Scourgify",
-    "house": "Hufflepuff",
-    "description": "¡Limpieza! Durante 3 turnos, el jugador objetivo debe limpiar un área sucia o beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden delegar la limpieza.",
-    "isCounter": false
-  },
-  {
-    "name": "Orchideous",
-    "house": "Hufflepuff",
-    "description": "¡Flores! Todos deben decir un cumplido al jugador de la derecha. El jugador activo elige el cumplido menos creativo; el que lo dijo bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden elegir 2 jugadores objetivo.",
-    "isCounter": false
-  },
-  {
-    "name": "Pack",
-    "house": "Hufflepuff",
-    "description": "¡Empacar! Durante 3 turnos, todos deben recoger objetos del suelo. Todos participan; el último bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs no deben recoger nada.",
-    "isCounter": false
-  },
-  {
-    "name": "Tergeo",
-    "house": "Hufflepuff",
-    "description": "¡Limpieza! Durante 3 turnos, todos deben limpiar la mesa. Todos participan; el que no bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden elegir quién limpia.",
-    "isCounter": false
-  },
-  {
-    "name": "Ferula",
-    "house": "Hufflepuff",
-    "description": "¡Vendas! Durante 3 turnos, fuerza al jugador objetivo a beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs obligan a beber 2 tragos.",
-    "isCounter": true
-  },
-  {
-    "name": "Erecto",
-    "house": "Hufflepuff",
-    "description": "¡Estructura! Durante 3 turnos, construye torres con vasos. Todos participan; el que la tire bebe 2 tragos.",
-    "houseAdvantage": "Hufflepuffs pueden construir la torre más alta.",
-    "isCounter": false
-  },
-  {
-    "name": "Anapneo",
-    "house": "Hufflepuff",
-    "description": "¡Respiración! Durante 3 turnos, todos deben contener la respiración 10 segundos. Todos participan; el que falle bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden saltarse el turno.",
-    "isCounter": false
-  },
-  {
-    "name": "Duro",
-    "house": "Hufflepuff",
-    "description": "¡Endurecer! Durante 3 turnos, el jugador objetivo debe quedarse rígido o beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden liberar al jugador.",
-    "isCounter": false
-  },
-  {
-    "name": "Fidelius Charm",
-    "house": "Hufflepuff",
-    "description": "¡Secreto! Durante 3 turnos, todos deben guardar un secreto. Todos participan; el que lo revele bebe 3 tragos.",
-    "houseAdvantage": "Hufflepuffs pueden elegir el secreto.",
-    "isCounter": false
-  },
-  {
-    "name": "Accio",
-    "house": "Hufflepuff",
-    "description": "¡Invocación! Señala un objeto. Durante 3 turnos, todos participan; el último en tocarlo bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden señalar cualquier objeto.",
-    "isCounter": false
-  },
-  {
-    "name": "Wingardium Leviosa",
-    "house": "Hufflepuff",
-    "description": "¡Levitación! Durante 3 turnos, levanta un objeto ligero. Todos participan; el último en hacerlo bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden levantar 2 objetos.",
-    "isCounter": false
-  },
-  {
-    "name": "Portus",
-    "house": "Hufflepuff",
-    "description": "¡Traslador! Durante 3 turnos, todos deben cambiar de asiento. Todos participan; el último bebe 2 tragos.",
-    "houseAdvantage": "Hufflepuffs pueden elegir quién se sienta dónde.",
-    "isCounter": false
-  },
-  {
-    "name": "Aparecium",
-    "house": "Hufflepuff",
-    "description": "¡Invisible! Durante 3 turnos, el jugador objetivo debe encontrar una palabra invisible o beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden crear la palabra invisible.",
-    "isCounter": false
-  },
-  {
-    "name": "Lumos",
-    "house": "Hufflepuff",
-    "description": "¡Luz! Durante 3 turnos, todos deben encender la linterna. Todos participan; el último bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden cambiar el color de la luz.",
-    "isCounter": false
-  },
-  {
-    "name": "Quietus",
-    "house": "Hufflepuff",
-    "description": "¡Silencio! Durante 3 turnos, fuerza al jugador más ruidoso a beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs deciden quién es el más ruidoso.",
-    "isCounter": false
-  },
-  {
-    "name": "Descendo",
-    "house": "Hufflepuff",
-    "description": "¡Descenso! Durante 3 turnos, todos deben sentarse en el suelo. Todos participan; el último bebe 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden elegir el lugar del suelo.",
-    "isCounter": false
-  },
-  {
-    "name": "Mobilicorpus",
-    "house": "Hufflepuff",
-    "description": "¡Movimiento! Durante 3 turnos, el jugador objetivo debe cambiar de lugar o beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden mover a dos personas.",
-    "isCounter": false
-  },
-  {
-    "name": "Deletrius",
-    "house": "Hufflepuff",
-    "description": "¡Borrado! Durante 3 turnos, borra los efectos de la última carta jugada y fuerza al jugador original a beber 1 trago.",
-    "houseAdvantage": "Hufflepuffs pueden borrar dos cartas.",
-    "isCounter": true
-  },
-  {
-    "name": "Silencio",
+    "name": "Incarcarous",
     "house": "Slytherin",
-    "description": "¡Silencio! El jugador objetivo no puede hablar durante 3 turnos y debe beber 1 trago si lo hace.",
-    "houseAdvantage": "Slytherins pueden obligar al jugador a beber 2 tragos.",
-    "isCounter": true
-  },
-  {
-    "name": "Obliviate",
-    "house": "Slytherin",
-    "description": "¡Olvido! Durante 3 turnos, el jugador objetivo debe olvidar su apodo o beber 2 tragos.",
-    "houseAdvantage": "Slytherins pueden cambiar el apodo del objetivo.",
+    "description": "¡Atadura! Durante 3 turnos, ata tus manos con las de tu vecino. Todos participan; quienes las despeguen, beben 1 trago.",
+    "houseAdvantage": "Slytherins eligen a quién atar.",
     "isCounter": false
   },
   {
-    "name": "Confundo",
+    "name": "Densaugeo",
     "house": "Slytherin",
-    "description": "¡Confusión! Durante 3 turnos, haz preguntas difíciles. Si el jugador objetivo falla, bebe 2 tragos.",
-    "houseAdvantage": "Slytherins pueden elegir qué pregunta es difícil.",
-    "isCounter": false
-  },
-  {
-    "name": "Incendio",
-    "house": "Slytherin",
-    "description": "¡Fuego! Durante 3 turnos, el jugador objetivo debe beber tragos 'calientes'.",
-    "houseAdvantage": "Slytherins pueden elegir el tipo de bebida 'caliente'.",
-    "isCounter": false
-  },
-  {
-    "name": "Diffindo",
-    "house": "Slytherin",
-    "description": "¡Corte! Durante 3 turnos, el jugador objetivo debe beber la mitad de tu trago.",
-    "houseAdvantage": "Slytherins siempre toman la mayor parte.",
-    "isCounter": false
-  },
-  {
-    "name": "Avada Kedavra",
-    "house": "Slytherin",
-    "description": "¡Maldición! El jugador objetivo debe beber 5 tragos durante 3 turnos.",
-    "houseAdvantage": "Slytherins pueden sumar 2 tragos más.",
-    "isCounter": false
-  },
-  {
-    "name": "Geminio",
-    "house": "Slytherin",
-    "description": "¡Duplicado! Durante 3 turnos, el jugador objetivo bebe el doble de tragos que tú.",
-    "houseAdvantage": "Slytherins pueden triplicar los tragos.",
-    "isCounter": false
-  },
-  {
-    "name": "Reducto",
-    "house": "Slytherin",
-    "description": "¡Explosión! Durante 3 turnos, todos los jugadores beben 1 trago.",
-    "houseAdvantage": "Slytherins están exentos.",
-    "isCounter": false
-  },
-  {
-    "name": "Obscuro",
-    "house": "Slytherin",
-    "description": "¡Vendado! Durante 3 turnos, el jugador objetivo debe vendarse los ojos o beber 1 trago.",
-    "houseAdvantage": "Slytherins deciden qué vendaje usar.",
+    "description": "¡Dientes! Durante 3 turnos, nadie puede mostrar los dientes al hablar.  Todos participan; el que no, bebe 1 trago.",
+    "houseAdvantage": "Slytherins pueden duplica los tragos.",
     "isCounter": false
   },
   {
     "name": "Defodio",
     "house": "Slytherin",
-    "description": "¡Talla! Durante 3 turnos, el jugador objetivo debe cantar mientras bebe.",
-    "houseAdvantage": "Slytherins pueden elegir la canción.",
+    "description": "¡Talla! Durante 3 turnos, Todos los magos deben cantar mientras hablan. Todos participan; el que no, bebe 1 trago.",
+    "houseAdvantage": "Slytherins eligen el estilo musical.",
     "isCounter": false
   },
   {
-    "name": "Imperio",
-    "house": "Slytherin",
-    "description": "¡Orden! Durante 3 turnos, obliga a alguien a beber 2 tragos.",
-    "houseAdvantage": "Slytherins pueden obligar a dos personas.",
-    "isCounter": false
-  },
-  {
-    "name": "Avis",
-    "house": "Slytherin",
-    "description": "¡Pájaros! Durante 3 turnos, todos deben aletear. Todos participan; el que no, bebe 1 trago.",
-    "houseAdvantage": "Slytherins pueden elegir el tipo de pájaro.",
-    "isCounter": false
-  },
-  {
-    "name": "Levicorpus",
-    "house": "Slytherin",
-    "description": "¡Levitación! Durante 3 turnos, el jugador objetivo debe ponerse de pie o beber 1 trago.",
-    "houseAdvantage": "Slytherins pueden decidir cuánto tiempo deben estar de pie.",
-    "isCounter": false
-  },
-  {
-    "name": "Confringo",
-    "house": "Slytherin",
-    "description": "¡Incendio! Durante 3 turnos, todos los jugadores beben 1 trago.",
-    "houseAdvantage": "Slytherins pueden elegir al jugador que bebe doble.",
-    "isCounter": false
-  },
-  {
-    "name": "Densaugeo",
-    "house": "Slytherin",
-    "description": "¡Dientes! Durante 3 turnos, nadie puede mostrar los dientes. El que lo haga bebe 1 trago.",
-    "houseAdvantage": "Slytherins pueden mirar fijamente para obligar a mostrar dientes.",
-    "isCounter": false
-  },
-  {
-    "name": "Incarcarous",
-    "house": "Slytherin",
-    "description": "¡Atadura! Durante 3 turnos, ata tus manos con las de tu vecino o ambos beben 1 trago.",
-    "houseAdvantage": "Slytherins eligen a quién atar.",
-    "isCounter": false
-  },
-  {
-    "name": "Petrificus Totalus",
-    "house": "Slytherin",
-    "description": "¡Petrificación! Durante 3 turnos, el jugador objetivo no puede moverse o bebe 2 tragos.",
-    "houseAdvantage": "Slytherins pueden extender a 5 turnos.",
+    "name": "Protego",
+    "house": "Gryffindor",
+    "description": "¡Escudo! Anula el efecto de la carta de Dumbuldore",
+    "houseAdvantage": "Refleja el hechizo hacia quien lo lanzó.",
     "isCounter": true
   },
   {
-    "name": "Fiendfyre Curse",
-    "house": "Slytherin",
-    "description": "¡Fuego Maldito! Durante 3 turnos, todos los jugadores beben 3 tragos.",
-    "houseAdvantage": "Slytherins eligen al jugador que bebe 5.",
-    "isCounter": false
-  },
-  {
-    "name": "Tarantallegra",
-    "house": "Slytherin",
-    "description": "¡Baile! Durante 3 turnos, el jugador objetivo debe bailar sin parar o beber 2 tragos.",
-    "houseAdvantage": "Slytherins pueden elegir la música.",
-    "isCounter": false
-  },
-  {
-    "name": "Morsmordre",
-    "house": "Slytherin",
-    "description": "¡Marca Tenebrosa! Durante 3 turnos, todos los jugadores deben beber 1 trago.",
-    "houseAdvantage": "Slytherins no beben.",
-    "isCounter": false
-  },
-  {
-    "name": "Sectumsempra",
-    "house": "Slytherin",
-    "description": "¡Corte! Durante 3 turnos, el jugador objetivo bebe 4 tragos.",
-    "houseAdvantage": "Slytherins pueden aumentar a 6 tragos.",
+    "name": "Dumbuldore",
+    "house": "Gryffindor",
+    "description": "¡Felicidades! haz sido proclamado el nuevo director de Hogwarts. Crea una ley procura que sea justa y que la mayoria de la mesa apruebe. Cada vez que se inclumpla tu ley el jugador infractor bebera 1 trago. Tu ley y reinado es vigente hasta que se proclame un nuevo Rey",
+    "houseAdvantage": "Los Gryffindor y Hufflepuff beben la mitad del castigo .",
     "isCounter": true
   },
   {
-    "name": "Crucio",
+    "name": "Minerva McGonagall",
+    "house": "Gryffindor",
+    "description": "¡Felicidades! haz sido proclamado el nuevo director de Hogwarts. Crea una ley procura que sea justa y que la mayoria de la mesa apruebe. Cada vez que se inclumpla tu ley el jugador infractor bebera 1 trago. Tu ley y reinado es vigente hasta que se proclame un nuevo Rey",
+    "houseAdvantage": "Los Gryffindor y Hufflepuff beben la mitad del castigo .",
+    "isCounter": true
+  },
+  {
+    "name": "Severus Snape",
     "house": "Slytherin",
-    "description": "¡Dolor! Durante 3 turnos, el jugador objetivo bebe 5 tragos.",
-    "houseAdvantage": "Slytherins pueden duplicar los tragos.",
+    "description": "¡Felicidades! haz sido proclamado el nuevo director de Hogwarts. Crea una ley procura que sea justa y que la mayoria de la mesa apruebe. Cada vez que se inclumpla tu ley el jugador infractor bebera 1 trago. Tu ley y reinado es vigente hasta que se proclame un nuevo Rey",
+    "houseAdvantage": "Los Slytherin y Ravenclaw beben la mitad del castigo .",
+    "isCounter": true
+  },  
+  {
+    "name": "Severus Snape",
+    "house": "Slytherin",
+    "description": "¡Felicidades! haz sido proclamado el nuevo director de Hogwarts. Crea una ley procura que sea justa y que la mayoria de la mesa apruebe. Cada vez que se inclumpla tu ley el jugador infractor bebera 1 trago. Tu ley y reinado es vigente hasta que se proclame un nuevo Rey",
+    "houseAdvantage": "Los Slytherin y Ravenclaw beben la mitad del castigo .",
     "isCounter": true
   },
-  {
-    "name": "Muffliato",
-    "house": "Ravenclaw",
-    "description": "¡Silencio! Durante 3 turnos, no se puede hablar en voz alta. Si el jugador objetivo habla, bebe 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden elegir el tema del susurro.",
-    "isCounter": true
-  },
-  {
-    "name": "Evanesco",
-    "house": "Ravenclaw",
-    "description": "¡Desaparición! Durante 3 turnos, el jugador objetivo debe ocultar su bebida o beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden decir dónde está la bebida.",
+ {
+    "name": "Aguamenti",
+    "house": "Gryffindor",
+    "description": "¡Agua! Durante 3 turnos, cada vez que un mago beba debes rellenar su vaso .",
+    "houseAdvantage": "Gryffindors pueden rellenar el vaso del objetivo con tu bebida.",
     "isCounter": false
   },
   {
-    "name": "Alohomora",
-    "house": "Ravenclaw",
-    "description": "¡Abre! Durante 3 turnos, describe un objeto; el jugador objetivo debe adivinar qué es o beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden dar pistas.",
+    "name": "Scourgify",
+    "house": "Hufflepuff",
+    "description": "¡Limpieza! Durante 3 turnos, debes limpiar un las áreas sucia o beber 1 trago.",
+    "houseAdvantage": "Hufflepuffs pueden delegar la limpieza.",
     "isCounter": false
   },
   {
-    "name": "Nox",
-    "house": "Ravenclaw",
-    "description": "¡Oscuridad! Durante 3 turnos, todos deben apagar las luces. Todos participan; el último bebe 2 tragos.",
-    "houseAdvantage": "Ravenclaws pueden dejar la luz encendida.",
+    "name": "Obliviate",
+    "house": "Slytherin",
+    "description": "¡Olvido! Durante 3 turnos, el mago de tu eleccion debe olvidar su castigo una vez realizado y repetirlo.",
+    "houseAdvantage": "Slytherins reducen la repeticion a la mitad.",
     "isCounter": false
   },
+
   {
-    "name": "Homenum Revelio",
-    "house": "Ravenclaw",
-    "description": "¡Revelación! Durante 3 turnos, todos deben revelar un secreto. Todos participan; el que no bebe 2 tragos.",
-    "houseAdvantage": "Ravenclaws eligen el tema del secreto.",
-    "isCounter": false
-  },
-  {
-    "name": "Prior Incantato",
-    "house": "Ravenclaw",
-    "description": "¡Revisión! Durante 3 turnos, fuerza al jugador objetivo a repetir la última carta jugada y beber 1 trago si falla.",
-    "houseAdvantage": "Ravenclaws pueden elegir cualquier carta de la pila.",
-    "isCounter": true
-  },
-  {
-    "name": "Repelo Muggletum",
-    "house": "Ravenclaw",
-    "description": "¡Repelente! Durante 3 turnos, nadie puede tocar tu vaso. Si el jugador objetivo intenta tocarlo, bebe 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden hacer que otros vasos sean repelentes.",
-    "isCounter": true
-  },
-  {
-    "name": "Meteolojinx Recanto",
-    "house": "Ravenclaw",
-    "description": "¡Clima! Durante 3 turnos, todos participan; si llueve, todos beben 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden decidir si llueve.",
-    "isCounter": false
-  },
-  {
-    "name": "Specialis Revelio",
-    "house": "Ravenclaw",
-    "description": "¡Revelación! Durante 3 turnos, fuerza al jugador objetivo a revelar el ingrediente secreto de su bebida o beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden elegir la bebida de otro.",
-    "isCounter": false
-  },
-  {
-    "name": "Legilimens",
-    "house": "Ravenclaw",
-    "description": "¡Mente! Durante 3 turnos, el jugador objetivo debe decir qué está pensando o beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden obligar a decir la verdad.",
-    "isCounter": false
-  },
-  {
-    "name": "Sonorus",
-    "house": "Ravenclaw",
-    "description": "¡Amplificación! Durante 3 turnos, el jugador objetivo más silencioso debe beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden decidir quién es el más silencioso.",
+    "name": "Obscuro",
+    "house": "Slytherin",
+    "description": "¡Vendado! Durante 3 turnos, el mago de tu eleccion debe vendarse los ojos o beber 1 shot.",
+    "houseAdvantage": "Slytherins deciden si vendar a alguien mas.",
     "isCounter": false
   },
   {
     "name": "Deprimo",
     "house": "Ravenclaw",
-    "description": "¡Presión! Durante 3 turnos, el jugador objetivo debe beber hasta el fondo.",
-    "houseAdvantage": "Ravenclaws pueden elegir el jugador que se salva.",
+    "description": "¡Presión! El mago de tu eleccion debe beber hasta el fondo.",
+    "houseAdvantage": "Ravenclaws pueden elegir si el mago que se salva.",
     "isCounter": false
   },
   {
-    "name": "Locomotor Mortis",
-    "house": "Ravenclaw",
-    "description": "¡Bloqueo! Durante 3 turnos, el jugador objetivo no puede mover las piernas o bebe 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden obligar a bailar.",
-    "isCounter": false
+    "name": "Crucio",
+    "house": "Slytherin",
+    "description": "¡Dolor! El mago de tu eleccion bebe 3 tragos. los magos a su costado beben 1 trago cada uno",
+    "houseAdvantage": "Slytherins pueden duplicar los tragos.",
+    "isCounter": true
   },
   {
-    "name": "Expulso",
-    "house": "Ravenclaw",
-    "description": "¡Expulsión! Durante 3 turnos, el jugador objetivo debe abandonar la mesa o beber 2 tragos.",
-    "houseAdvantage": "Ravenclaws pueden quedarse.",
-    "isCounter": false
-  },
-  {
-    "name": "Densaugeo",
-    "house": "Ravenclaw",
-    "description": "¡Dientes! Durante 3 turnos, el jugador objetivo no puede mostrar los dientes o bebe 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden hacer que otros los muestren.",
-    "isCounter": false
-  },
-  {
-    "name": "Incarcarous",
-    "house": "Ravenclaw",
-    "description": "¡Atadura! Durante 3 turnos, obliga al jugador objetivo a atar sus manos o beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden elegir a los vecinos.",
-    "isCounter": false
+    "name": "Sectumsempra",
+    "house": "Slytherin",
+    "description": "¡Corte! El mago de tu eleccion bebe 3 tragos.",
+    "houseAdvantage": "Slytherins pueden aumentar 2 tragos.",
+    "isCounter": true
   },
   {
     "name": "Tarantallegra",
-    "house": "Ravenclaw",
-    "description": "¡Baile! Durante 3 turnos, el jugador objetivo debe bailar o beber 1 trago.",
-    "houseAdvantage": "Ravenclaws pueden elegir el estilo.",
+    "house": "Slytherin",
+    "description": "¡Baile! Obligas a 2 magos de tu eleccion a bailar o beber 1 shot.",
+    "houseAdvantage": "Slytherins pueden elegir la música.",
     "isCounter": false
   },
   {
-    "name": "Morsmordre",
-    "house": "Ravenclaw",
-    "description": "¡Marca! Durante 3 turnos, todos participan; todos beben 1 trago.",
-    "houseAdvantage": "Ravenclaws están exentos.",
+    "name": "Imperio",
+    "house": "Slytherin",
+    "description": "¡Orden! Obligas al mago de tu eleccion a beber 2 tragos.",
+    "houseAdvantage": "Slytherins pueden obligar a dos personas.",
     "isCounter": false
+  },
+  {
+    "name": "Reducto",
+    "house": "Slytherin",
+    "description": "¡Explosión! Todos los magos beben 3 tragos.",
+    "houseAdvantage": "Slytherins están exentos.",
+    "isCounter": false
+  },
+  {
+    "name": "Diffindo",
+    "house": "Slytherin",
+    "description": "¡Corte! El mago de tu eleccion debe beber la mitad de tu tragos.",
+    "houseAdvantage": "Gryffindors siempre toman la mayor parte.",
+    "isCounter": false
+  },
+  {
+    "name": "Mobilicorpus",
+    "house": "Hufflepuff",
+    "description": "¡Movimiento! El mago de tu eleccion debe cambiar de lugar o beber 3 tragos.",
+    "houseAdvantage": "Hufflepuffs pueden mover a dos personas.",
+    "isCounter": false
+  },
+
+  {
+    "name": "Episkey",
+    "house": "Gryffindor",
+    "description": "¡Curación! Fuerza al mago de tu eleccion a beber 3 tragos para 'curar' su error.",
+    "houseAdvantage": "Gryffindors pueden curar a dos personas a la vez.",
+    "isCounter": true
+  },
+  {
+    "name": "Reparo",
+    "house": "Gryffindor",
+    "description": "¡Reparación! Fuerza al mago de tu eleccion a beber 3 tragos para 'reparar' su error.",
+    "houseAdvantage": "Gryffindors pueden forzar 2 tragos.",
+    "isCounter": true
+  },
+  {
+    "name": "Expulso",
+    "house": "Gryffindor",
+    "description": "¡Expulsión! Durante 3 turnos, como mago debes beber 3 tragos de brebaje al final del turno, si no quieres hacerlo debes beber 1 shot.",
+    "houseAdvantage": "Gryffindors pueden elegir a quién expulsar.",
+    "isCounter": true
+  },
+  {
+    "name": "Avada Kedavra",
+    "house": "Slytherin",
+    "description": "¡Maldición! El mago de tu eleccion debe beber 1 shot o una turbochela",
+    "houseAdvantage": "Slytherins pueden sumar 2 tragos más.",
+    "isCounter": false
+  },
+  {
+    "name": "Expelliarmus",
+    "house": "Gryffindor",
+    "description": "¡Desarme! El  mago de tu eleccion debe beber 3 tragos.",
+    "houseAdvantage": "El objetivo bebe 2 tragos en su lugar.",
+    "isCounter": true
+  },
+
+  {
+    "name": "Impedimenta",
+    "house": "Gryffindor",
+    "description": "¡Congelar! El mago de tu eleccion debe beber 3 tragos.",
+    "houseAdvantage": "Gryffindors pueden obligar al objetivo a beber 1 trago.",
+    "isCounter": true
+  },
+  {
+    "name": "Liberacorpus",
+    "house": "Gryffindor",
+    "description": "¡Liberación! Liberas al mago de tu eleccion de beber su tragos en los proximos 3 turnos si no liberas a nadie bebes 1 shot.",
+    "houseAdvantage": "Una vez liberado a alguien puedes mandar un shot al mago de tu eleccion",
+    "isCounter": false
+  }, 
+  {
+    "name": "Geminio",
+    "house": "Slytherin",
+    "description": "¡Duplicado! Durante 3 turnos, el mago de tu eleccion bebe el doble de tragos.",
+    "houseAdvantage": "Slytherins pueden triplicar los tragos.",
+    "isCounter": false
+  },
+  {
+    "name": "Levicorpus",
+    "house": "Slytherin",
+    "description": "¡Levitación! Todos los magos deben de ponerse de pie. Todos participan; el ultimo en hacerlo, bebe 1 shot.",
+    "houseAdvantage": "Slytherins son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Avis",
+    "house": "Slytherin",
+    "description": "¡Pájaros! Todos los magos deben aletear. Todos participan; el ultimo en hacerlo, bebe 1 shot.",
+    "houseAdvantage": "Slytherins son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Riddikulus",
+    "house": "Gryffindor",
+    "description": "¡Boggart! Haz la cara más ridícula . Todos participan; el primero en reírse debe beber 1 shot.",
+    "houseAdvantage": "Gryffindors son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+ {
+    "name": "Erecto",
+    "house": "Hufflepuff",
+    "description": "¡Estructura! Equilibra tu vaso con algo que no sea la mesa. Todos participan; los que no lo logren beben 1 shot",
+    "houseAdvantage": "Hufflepuffs son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Anapneo",
+    "house": "Hufflepuff",
+    "description": "¡Respiración! Todos los magos deben contener la respiración. Todos participan; el que la contenga mas tiempo reparte 1 shot al mago de su eleccion.",
+    "houseAdvantage": "Hufflepuffs son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Petrificus Totalus",
+    "house": "Slytherin",
+    "description": "¡Petrificación! Todos los magos deben de permanecer inmoviles, el primero en moverse bebera 1 shot",
+    "houseAdvantage": "Slytherins son los jueces eligen quién bebe el trago.",
+    "isCounter": true
+  },
+  {
+    "name": "Accio",
+    "house": "Hufflepuff",
+    "description": "¡Invocación! Señala un objeto. Todos participan; el último mago en tocarlo bebe 1 shot.",
+    "houseAdvantage": "Hufflepuffs son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Wingardium Leviosa",
+    "house": "Hufflepuff",
+    "description": "¡Levitación! Todos los magos levantan un objeto ligero con 1 dedo. Todos participan; el primero que tire el objeto bebe 1 shot.",
+    "houseAdvantage": "Hufflepuffs son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Portus",
+    "house": "Hufflepuff",
+    "description": "¡Traslador! Todos los magos deben cambiar de asiento. Todos participan; el último bebe 1 shot.",
+    "houseAdvantage": "Hufflepuffs son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Lumos",
+    "house": "Hufflepuff",
+    "description": "¡Luz! Todos los magos deben encender la linterna de su celular o varita. Todos participan; el último bebe 1 shot.",
+    "houseAdvantage": "Hufflepuffs son los jueces eligen quién bebe el trago.",
+    "isCounter": false
+  },
+  {
+    "name": "Descendo",
+    "house": "Hufflepuff",
+    "description": "¡Descenso! Todos los magos deben sentarse en el suelo. Todos participan; el último bebe 1 shot.",
+    "houseAdvantage": "Hufflepuffs pueden elegir el lugar del suelo.",
+    "isCounter": false
+  },  {
+    "name": "Confundo",
+    "house": "Slytherin",
+    "description": "¡Confusión! Apunta a un mago hazle una pregunta. Rapidamente y sin contesar, ese jugador debe formular otra pegunta y asi sucesivamente hasta formar una cadena de preguntas. Si la pregunta no es relacionada a HP, el mago se congela o responde la pregunta debe beber 3 tragos de su bebida.",
+    "houseAdvantage": "Slytherins pueden duplicar el castigo.",
+    "isCounter": false
+  },
+  {
+    "name": "Homenum Revelio",
+    "house": "Ravenclaw",
+    "description": "¡Revelación! Por turnos todos deben revelar un secreto. Todos participan; el que no quiera debera beber 3 tragos.",
+    "houseAdvantage": "Ravenclaws eligen el tema del secreto.",
+    "isCounter": false
+  },
+  {
+    "name": "Sombrero seleccionador",
+    "house": "Ravenclaw",
+    "description": "¡El sombrero a hablado! Escoge  una categoria para jugar un caricachupas; el perdedor bebe 3 tragos.",
+    "houseAdvantage": "Ravenclaws eligen el tema del caricachupas.",
+    "isCounter": false
+  },
+  {
+    "name": "Impervius",
+    "house": "Ravenclaw",
+    "description": "¡Historia! Di 1 palabra. El siguiente jugador repetira todas las palabras anteriores en el mismo orden y agregara solamente una palabra. Asi suscesivamente hasta que alguien falle; el perdedor bebe 3 tragos.",
+    "houseAdvantage": "Ravenclaws eligen el tema de la historia.",
+    "isCounter": false
+  },
+  {
+    "name": "Expecto Patronum",
+    "house": "Gryffindor",
+    "description": "¡Patronus! Se jugara una ronda de yo nunca nunca; el que no desee decir bebe 1 shot.",
+    "houseAdvantage": "Todos los Slytherin deben de decir 2 yo nunca nunca.",
+    "isCounter": true
+  },
+  {
+    "name": "Finite Incantatem",
+    "house": "Slytherin",
+    "description": "¡Fin! Discrepo, di una palabra, por turnos cada jugador dira una palabra relacionada con la anteior que escucho, si alguno discrepa debera decir discrepo y si la mayoria discrepala minoria bebe 2 tragos, de lo contrario la mayoria bebe 2 tragos.",
+    "houseAdvantage": "Slytherin puede duplicar el castigo",
+    "isCounter": true
   }
 ]
