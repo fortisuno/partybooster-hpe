@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import { Server } from 'socket.io';
 import corsPlugin, { ALLOWED_ORIGINS } from './config/cors.js';
-import { createInMemoryStore } from './infrastructure/persistence/in-memory-store.js';
+import { createGameStore } from './infrastructure/persistence/store-factory.js';
 import { createSocketHandlers } from './infrastructure/socket/handlers.js';
 import { SERVER_PORT } from './config/constants.js';
 
@@ -18,7 +18,7 @@ async function bootstrap() {
 
   await fastify.register(corsPlugin);
 
-  const store = createInMemoryStore();
+  const gameStore = createGameStore();
 
   const io = new Server(fastify.server, {
     cors: {
@@ -28,7 +28,7 @@ async function bootstrap() {
     },
   });
 
-  const handlers = createSocketHandlers(store, io);
+  const handlers = createSocketHandlers(gameStore, io);
   handlers.registerHandlers(io);
 
   fastify.get('/health', async () => ({
@@ -37,9 +37,7 @@ async function bootstrap() {
   }));
 
   fastify.post('/admin/reset', async (_req, reply) => {
-    store.rooms.clear();
-    store.playerToRoom.clear();
-    store.socketToPlayer.clear();
+    await gameStore.clearAll();
     return reply.send({ status: 'reset', rooms: 0, players: 0 });
   });
 

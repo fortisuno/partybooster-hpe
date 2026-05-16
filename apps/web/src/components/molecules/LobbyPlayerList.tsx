@@ -1,11 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Player, House } from '@/types';
 import { HouseShield } from '@/components/atoms/HouseShield';
-import { Crown } from 'lucide-react';
+import { Crown, X } from 'lucide-react';
 
 interface LobbyPlayerListProps {
   players: Player[];
   currentPlayerId: string | null;
+  isHost?: boolean;
+  onKick?: (playerId: string) => void;
   className?: string;
 }
 
@@ -15,7 +17,7 @@ const playerVariants = {
   exit: { opacity: 0, x: 10, transition: { duration: 0.2 } },
 };
 
-export function LobbyPlayerList({ players, currentPlayerId, className }: LobbyPlayerListProps) {
+export function LobbyPlayerList({ players, currentPlayerId, isHost, onKick, className }: LobbyPlayerListProps) {
   return (
     <div className={`space-y-2 ${className ?? ''}`}>
       <AnimatePresence mode="popLayout">
@@ -27,7 +29,7 @@ export function LobbyPlayerList({ players, currentPlayerId, className }: LobbyPl
             animate="animate"
             exit="exit"
             layout
-            className="glass rounded-2xl px-4 py-3.5 flex items-center gap-3"
+            className={`glass rounded-2xl px-4 py-3.5 flex items-center gap-3 ${player.offline ? 'opacity-50' : ''}`}
           >
             <HouseShield house={player.house as House} size={32} active={player.id === currentPlayerId} />
             <div className="flex-1 min-w-0">
@@ -38,11 +40,23 @@ export function LobbyPlayerList({ players, currentPlayerId, className }: LobbyPl
                     <Crown size={14} />
                   </span>
                 )}
+                {player.offline && (
+                  <span className="text-[10px] text-white/30 uppercase tracking-wider">Desconectado</span>
+                )}
               </div>
               <span className="text-[11px] text-white/30">{player.house}</span>
             </div>
             {player.id === currentPlayerId && (
               <span className="text-[10px] text-white/20 uppercase tracking-wider font-body">Tú</span>
+            )}
+            {isHost && onKick && player.id !== currentPlayerId && !player.offline && (
+              <button
+                onClick={() => onKick(player.id)}
+                className="p-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
+                aria-label={`Expulsar a ${player.name}`}
+              >
+                <X size={14} className="text-white/30 hover:text-red-400/80 transition-colors" />
+              </button>
             )}
           </motion.div>
         ))}

@@ -1,4 +1,4 @@
-import { Edit2 } from 'lucide-react';
+import { Edit2, Info } from 'lucide-react';
 import { useGameStore } from '@/store/useGameStore';
 import { HouseShield } from '@/components/atoms/HouseShield';
 import { TurnDot } from '@/components/atoms/TurnDot';
@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 export function Header({ className }: HeaderProps) {
-  const { userProfile, currentScreen, goToProfile } = useGameStore();
+  const { userProfile, currentScreen, goToProfile, goToCardInfo } = useGameStore();
 
   const hideEdit = currentScreen === 'profile-edit';
 
@@ -40,11 +40,20 @@ export function Header({ className }: HeaderProps) {
           </div>
         </button>
 
-        <div className="flex items-center gap-2">
-          <TurnDot />
-          <span className="text-[11px] text-white/40 font-medium tracking-wide font-body uppercase">
-            En línea
-          </span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={goToCardInfo}
+            className="p-2 rounded-xl hover:bg-white/5 transition-colors"
+            aria-label="Información de cartas"
+          >
+            <Info size={18} className="text-white/50 hover:text-white/80 transition-colors" />
+          </button>
+          <div className="flex items-center gap-2">
+            <TurnDot />
+            <span className="text-[11px] text-white/40 font-medium tracking-wide font-body uppercase">
+              En línea
+            </span>
+          </div>
         </div>
       </div>
     </header>

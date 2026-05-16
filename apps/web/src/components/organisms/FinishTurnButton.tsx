@@ -1,17 +1,17 @@
 import { motion } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { useGameStore } from '@/store/useGameStore';
 import { cn } from '@/lib/utils';
 
-interface DrawButtonProps {
+interface FinishTurnButtonProps {
   className?: string;
 }
 
-export function DrawButton({ className }: DrawButtonProps) {
-  const { drawCard } = useGameStore();
+export function FinishTurnButton({ className }: FinishTurnButtonProps) {
+  const { finishTurn } = useGameStore();
 
-  const handleDraw = () => {
-    drawCard();
+  const handleFinish = () => {
+    finishTurn();
   };
 
   return (
@@ -22,7 +22,7 @@ export function DrawButton({ className }: DrawButtonProps) {
       className={cn('flex flex-col items-center', className)}
     >
       <motion.button
-        onClick={handleDraw}
+        onClick={handleFinish}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.9 }}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
@@ -33,10 +33,10 @@ export function DrawButton({ className }: DrawButtonProps) {
           'active:scale-90 transition-all duration-200'
         )}
       >
-        <ArrowUp size={28} className="text-white/70" />
+        <Check size={28} className="text-white/70" />
       </motion.button>
       <p className="text-center text-[10px] text-white/20 mt-2 uppercase tracking-[0.1em] font-body">
-        Robar
+        Finalizar Turno
       </p>
     </motion.div>
   );

@@ -4,7 +4,7 @@ import type { Socket } from 'socket.io-client';
 import { getSocket } from '@/services/socket';
 import type { Card, GameState, House, Player } from '@/types';
 
-type ScreenId = 'join-create' | 'lobby' | 'game-arena' | 'profile-edit';
+type ScreenId = 'join-create' | 'lobby' | 'game-arena' | 'profile-edit' | 'card-info';
 
 interface UserProfile {
   name: string;
@@ -33,14 +33,16 @@ interface GameStore {
   createRoom(name: string, house: House): void;
   joinRoom(roomCode: string, name: string, house: House): void;
   startGame(): void;
-  drawCard(): void;
+  finishTurn(): void;
   leaveRoom(): void;
+  kickPlayer(targetPlayerId: string): void;
   terminateSession(): void;
   clearError(): void;
   reset(): void;
   setScreen(screen: ScreenId): void;
   goBack(): void;
   goToProfile(): void;
+  goToCardInfo(): void;
   updateUserProfile(profile: UserProfile): void;
   toggleSidebar(open?: boolean): void;
 }
@@ -155,16 +157,17 @@ export const useGameStore = create<GameStore>()(
           }
         });
 
-        socket.on('game:started', (data: { gameState: GameState }) => {
+        socket.on('game:started', (data: { gameState: GameState; card: Card }) => {
           set({
             gameState: data.gameState,
+            lastDrawnCard: data.card,
             currentScreen: 'game-arena',
             prevScreen: 'lobby',
             isLoading: false,
           });
         });
 
-        socket.on('card:drawn', (data: { card: Card; gameState: GameState }) => {
+        socket.on('turn:finished', (data: { card: Card; gameState: GameState }) => {
           set({
             gameState: data.gameState,
             lastDrawnCard: data.card,
@@ -191,6 +194,20 @@ export const useGameStore = create<GameStore>()(
               gameState: {
                 ...gameState,
                 players: gameState.players.filter((p: Player) => p.id !== data.playerId),
+              },
+            });
+          }
+        });
+
+        socket.on('player:offline', (data: { playerId: string }) => {
+          const { gameState } = get();
+          if (gameState) {
+            set({
+              gameState: {
+                ...gameState,
+                players: gameState.players.map((p: Player) =>
+                  p.id === data.playerId ? { ...p, offline: true } : p
+                ),
               },
             });
           }
@@ -252,10 +269,10 @@ export const useGameStore = create<GameStore>()(
       },
 
       joinRoom(roomCode: string, name: string, house: House) {
-        const { socket } = get();
+        const { socket, playerId } = get();
         if (!socket) return;
         set({ userProfile: { name, house }, playerName: name, playerHouse: house, roomCode: roomCode.toUpperCase(), isLoading: true });
-        socket.emit('room:join', { roomCode: roomCode.toUpperCase(), name, house });
+        socket.emit('room:join', { roomCode: roomCode.toUpperCase(), name, house, playerId });
       },
 
       startGame() {
@@ -265,11 +282,11 @@ export const useGameStore = create<GameStore>()(
         socket.emit('game:start');
       },
 
-      drawCard() {
+      finishTurn() {
         const { socket } = get();
         if (!socket) return;
         set({ isLoading: true });
-        socket.emit('game:draw');
+        socket.emit('turn:finish');
       },
 
       leaveRoom() {
@@ -277,6 +294,14 @@ export const useGameStore = create<GameStore>()(
         if (!socket) return;
         set({ isLoading: true });
         socket.emit('room:leave');
+      },
+
+      kickPlayer(targetPlayerId: string) {
+        const { socket } = get();
+        if (!socket) return;
+        set({ isLoading: true });
+        socket.emit('player:kick', { targetPlayerId });
+        set({ isLoading: false });
       },
 
       terminateSession() {
@@ -331,6 +356,11 @@ export const useGameStore = create<GameStore>()(
       goToProfile() {
         const { currentScreen } = get();
         set({ prevScreen: currentScreen, currentScreen: 'profile-edit' });
+      },
+
+      goToCardInfo() {
+        const { currentScreen } = get();
+        set({ prevScreen: currentScreen, currentScreen: 'card-info' });
       },
 
       updateUserProfile(profile: UserProfile) {
