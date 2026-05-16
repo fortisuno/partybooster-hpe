@@ -1,4 +1,4 @@
-import type { Card, Deck } from './card.js';
+import type { Deck } from './card.js';
 import type { Player } from './player.js';
 
 export type GameStatus = 'lobby' | 'playing' | 'finished';
