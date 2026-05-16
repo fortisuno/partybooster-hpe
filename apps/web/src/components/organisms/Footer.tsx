@@ -8,7 +8,7 @@ export function Footer() {
       <div className="flex items-center gap-3 text-[10px] text-white/25 font-mono">
         <span>v{packageJson.version}</span>
         <span className="opacity-40">|</span>
-        <span className="max-w-[140px] truncate">{API_URL}</span>
+        <span className="max-w-[280px] truncate">{API_URL}</span>
       </div>
     </footer>
   );

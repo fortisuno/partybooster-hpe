@@ -2,24 +2,24 @@
 # =============================================
 # Backend Deployment Script
 # =============================================
-# Builds and deploys the game backend Docker image to Kubernetes.
+# Deploys the game backend Docker image to Kubernetes.
 # Optionally configures Redis by setting the REDIS_URL env var.
 #
 # Usage:
 #   ./scripts/deploy-backend.sh [REDIS_URL]
 #
+# Arguments:
+#   REDIS_URL (optional)
+#
 # Examples:
 #   # In-memory storage (default):
 #   ./scripts/deploy-backend.sh
 #
-#   # Redis with no auth:
-#   ./scripts/deploy-backend.sh "redis://192.168.0.100:6379"
-#
 #   # Redis with password:
 #   ./scripts/deploy-backend.sh "redis://:mypassword@redis.upstash.io:6379"
 #
-#   # Redis with TLS:
-#   ./scripts/deploy-backend.sh "rediss://redis.upstash.io:6379"
+# Note:
+#   Build the image first with: ./scripts/build-backend.sh
 # =============================================
 
 set -e
@@ -33,19 +33,15 @@ NAMESPACE="card-game"
 DEPLOYMENT_NAME="game-backend"
 HEALTH_URL="http://api-partybooster-hpe.rehiletehvac.com/health"
 
-# ---- Color output helpers ----
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
 NC='\033[0m'
 
 info()  { echo -e "${GREEN}[INFO]${NC} $1"; }
 warn()  { echo -e "${YELLOW}[WARN]${NC} $1"; }
 err()   { echo -e "${RED}[ERR]${NC} $1"; exit 1; }
-dbg()   { echo -e "${BLUE}[DBG]${NC} $1"; }
 
-# ---- Parse arguments ----
 REDIS_URL="${1:-}"
 
 if [ -n "$REDIS_URL" ]; then
@@ -54,39 +50,26 @@ else
   warn "No REDIS_URL provided. Backend will use in-memory storage."
 fi
 
-# ---- Check prerequisites ----
-info "Checking prerequisites..."
-
-if ! command -v docker &> /dev/null; then
-  err "Docker is not installed or not in PATH."
-fi
-
 if ! command -v kubectl &> /dev/null; then
   err "kubectl is not installed or not in PATH."
 fi
 
-# Check docker buildx supports linux/arm64
-if ! docker buildx ls | grep -q "linux/arm64"; then
-  warn "Docker buildx may not have linux/arm64 support. Creating a new builder..."
-  docker buildx create --use --name multiplatform-builder 2>/dev/null || true
+DEPLOYMENT_EXISTS=$(kubectl get deployment "$DEPLOYMENT_NAME" -n "$NAMESPACE" 2>/dev/null && echo "yes" || echo "no")
+
+if [ "$DEPLOYMENT_EXISTS" = "no" ]; then
+  warn "Deployment '$DEPLOYMENT_NAME' not found in namespace '$NAMESPACE'."
+  info "Attempting to apply backend manifest..."
+
+  MANIFEST_FILE="$BACKEND_DIR/k8s/deployment.yaml"
+  if [ -f "$MANIFEST_FILE" ]; then
+    kubectl apply -f "$MANIFEST_FILE"
+    info "Waiting for deployment to be ready..."
+    kubectl rollout status deployment/"$DEPLOYMENT_NAME" -n "$NAMESPACE" --timeout=180s || true
+  else
+    err "Manifest file not found at $MANIFEST_FILE. Please deploy the backend first."
+  fi
 fi
 
-# ---- Build and push Docker image ----
-info "Building Docker image for linux/arm64..."
-info "  Image: $IMAGE_NAME"
-info "  Context: $PROJECT_ROOT"
-
-cd "$PROJECT_ROOT"
-
-docker buildx build \
-  --platform linux/arm64 \
-  -t "$IMAGE_NAME" \
-  --push \
-  "$PROJECT_ROOT"
-
-info "Image built and pushed successfully."
-
-# ---- Update K8s deployment environment ----
 info "Updating Kubernetes deployment environment..."
 
 if [ -n "$REDIS_URL" ]; then
@@ -101,7 +84,6 @@ else
     "REDIS_URL-"
 fi
 
-# ---- Restart deployment ----
 info "Restarting deployment '$DEPLOYMENT_NAME' in namespace '$NAMESPACE'..."
 
 kubectl rollout restart deployment/"$DEPLOYMENT_NAME" -n "$NAMESPACE"
@@ -109,7 +91,6 @@ kubectl rollout status deployment/"$DEPLOYMENT_NAME" -n "$NAMESPACE" --timeout=1
 
 info "Deployment rolled out successfully."
 
-# ---- Verify health ----
 info "Verifying backend health..."
 
 for i in 1 2 3; do
@@ -129,7 +110,6 @@ for i in 1 2 3; do
   fi
 done
 
-# ---- Done ----
 echo ""
 info "============================================="
 info "  DEPLOYMENT COMPLETE"

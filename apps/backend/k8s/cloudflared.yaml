@@ -30,7 +30,7 @@ metadata:
 # =============================================
 # ConfigMap — Ingress Rules
 # =============================================
-# NOTE: ${TUNNEL_UUID} and ${TUNNEL_HOSTNAME} are substituted by envsubst
+# NOTE: 0262ce99-be82-433b-8a03-229b6e67706f and api-partybooster-hpe.rehiletehvac.com are substituted by envsubst
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -38,11 +38,11 @@ metadata:
   namespace: cloudflare
 data:
   config.yaml: |
-    tunnel: ${TUNNEL_UUID}
+    tunnel: 0262ce99-be82-433b-8a03-229b6e67706f
     credentials-file: /etc/cloudflared/credentials.json
 
     ingress:
-      - hostname: ${TUNNEL_HOSTNAME}
+      - hostname: api-partybooster-hpe.rehiletehvac.com
         service: http://game-service.card-game.svc.cluster.local:80
       - service: http_status:404
 ---
@@ -76,7 +76,7 @@ spec:
             - --config
             - /etc/cloudflared/config.yaml
             - run
-            - ${TUNNEL_UUID}
+            - 0262ce99-be82-433b-8a03-229b6e67706f
           resources:
             requests:
               memory: "32Mi"

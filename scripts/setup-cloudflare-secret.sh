@@ -9,7 +9,12 @@
 #   4. Prints the TUNNEL_UUID to use in cloudflared.yaml
 #
 # Usage:
-#   ./scripts/setup-cloudflare-secret.sh
+#   ./scripts/setup-cloudflare-secret.sh [tunnel_name] [namespace] <hostname>
+#
+# Arguments:
+#   tunnel_name (optional, default: partybooster-hpe)
+#   namespace   (optional, default: cloudflare)
+#   hostname    (required)
 #
 # Prerequisites:
 #   - cloudflared CLI installed (https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/)
@@ -19,8 +24,24 @@
 
 set -e
 
-TUNNEL_NAME="partybooster-hpe"
-NAMESPACE="cloudflare"
+ENV_FILE="apps/backend/k8s/k8s.env"
+TUNNEL_NAME="${1:-partybooster-hpe}"
+NAMESPACE="${2:-cloudflare}"
+TUNNEL_HOSTNAME="$3"
+
+if [ -z "$TUNNEL_HOSTNAME" ]; then
+  # Fallback to env file if hostname not provided as 3rd argument
+  if [ -f "$ENV_FILE" ]; then
+    source "$ENV_FILE"
+  fi
+  
+  if [ -z "$TUNNEL_HOSTNAME" ]; then
+    echo -e "${RED}[ERR]${NC} Missing hostname argument."
+    echo -e "Usage: ./scripts/setup-cloudflare-secret.sh [tunnel_name] [namespace] <hostname>"
+    exit 1
+  fi
+fi
+
 SECRET_NAME="tunnel-credentials"
 
 # ---- Color output helpers ----
@@ -127,14 +148,13 @@ kubectl create secret generic "$SECRET_NAME" \
 info "Secret created successfully."
 
 # ---- Load environment variables from k8s.env ----
-ENV_FILE="apps/backend/k8s/k8s.env"
 if [ -f "$ENV_FILE" ]; then
   info "Loading environment from $ENV_FILE..."
   set -a
   source "$ENV_FILE"
   set +a
 else
-  warn "No k8s.env found at $ENV_FILE. Create it from k8s.env.example with TUNNEL_UUID and TUNNEL_HOSTNAME."
+  warn "No k8s.env found at $ENV_FILE."
 fi
 
 # ---- Create cloudflare-tunnel-config Secret with UUID and hostname ----
@@ -160,13 +180,13 @@ MANIFEST_FILE="apps/backend/k8s/cloudflared.yaml"
 if [ -f "$MANIFEST_FILE" ]; then
   info "Updating $MANIFEST_FILE with TUNNEL_UUID..."
 
-  # Replace placeholder in ConfigMap
-  sed -i.bak "s/<TUNNEL_UUID>/$TUNNEL_UUID/g" "$MANIFEST_FILE"
+  # Replace placeholders in ConfigMap and Deployment
+  export TUNNEL_UUID
+  export TUNNEL_HOSTNAME
+  envsubst '$TUNNEL_UUID,$TUNNEL_HOSTNAME' < "$MANIFEST_FILE" > "${MANIFEST_FILE}.tmp"
+  mv "${MANIFEST_FILE}.tmp" "$MANIFEST_FILE"
 
-  # Remove backup
-  rm -f "${MANIFEST_FILE}.bak"
-
-  info "Manifest updated. ConfigMap and Deployment args now use UUID: $TUNNEL_UUID"
+  info "Manifest updated. ConfigMap and Deployment args now use UUID: $TUNNEL_UUID and Hostname: $TUNNEL_HOSTNAME"
 else
   warn "Manifest file '$MANIFEST_FILE' not found. Please manually replace <TUNNEL_UUID> in:"
   warn "  - ConfigMap 'cloudflared-config' (key: tunnel)"
