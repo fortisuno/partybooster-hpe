@@ -71,7 +71,7 @@ export function ScreenJoinCreate() {
         ) : (
           <div className="w-full max-w-sm space-y-4">
             <div className="space-y-2">
-              <label className="text-[11px] text-white/40 uppercase tracking-[0.12em] font-medium font-body block">
+              <label className="text-[11px] text-white/40 text-center uppercase tracking-[0.12em] font-medium font-body block">
                 Ingresa el Código de Sala
               </label>
               <Input
