@@ -5,7 +5,7 @@ import { CustomButton } from '@/components/atoms/CustomButton';
 import { Sparkles } from 'lucide-react';
 
 export function GameBoard() {
-  const { gameState, playerId, playerHouse, drawCard, isLoading } = useGameStore();
+  const { gameState, playerId, playerHouse, finishTurn, isLoading } = useGameStore();
 
   if (!gameState || gameState.status !== 'playing') return null;
 
@@ -35,7 +35,7 @@ export function GameBoard() {
             </div>
             <CustomButton
               house={playerHouse ?? undefined}
-              onClick={drawCard}
+              onClick={finishTurn}
               disabled={isLoading || isEmptyDeck}
               className="w-full"
               size="lg"
