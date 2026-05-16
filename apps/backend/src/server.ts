@@ -1,9 +1,15 @@
 import Fastify from 'fastify';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import corsPlugin, { ALLOWED_ORIGINS } from './config/cors.js';
 import { createGameStore } from './infrastructure/persistence/store-factory.js';
 import { createSocketHandlers } from './infrastructure/socket/handlers.js';
 import { SERVER_PORT } from './config/constants.js';
+
+function formatLog(event: string, data?: unknown): string {
+  const timestamp = new Date().toISOString();
+  const payload = data ? ` ${JSON.stringify(data)}` : '';
+  return `[${timestamp}] ${event}${payload}`;
+}
 
 process.on('uncaughtException', (err) => {
   console.error('Excepción no capturada:', err);
@@ -18,6 +24,14 @@ async function bootstrap() {
 
   await fastify.register(corsPlugin);
 
+  fastify.addHook('onRequest', async (request) => {
+    console.log(formatLog(`[HTTP] ${request.method} ${request.url}`));
+  });
+
+  fastify.addHook('onResponse', async (request, reply) => {
+    console.log(formatLog(`[HTTP] ${request.method} ${request.url} -> ${reply.statusCode}`));
+  });
+
   const gameStore = createGameStore();
 
   const io = new Server(fastify.server, {
@@ -26,6 +40,24 @@ async function bootstrap() {
       methods: ['GET', 'POST'],
       credentials: true,
     },
+  });
+
+  io.on('connection', (socket: Socket) => {
+    console.log(formatLog(`[SOCKET] connect socket_id=${socket.id} remote=${socket.handshake.address}`));
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const origEmit = socket.emit.bind(socket);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const origOn = socket.on.bind(socket);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (socket as any).on = function (event: string, fn: (...args: unknown[]) => void) {
+      console.log(formatLog(`[SOCKET] event=${event} socket_id=${socket.id}`));
+      return origOn(event, fn);
+    };
+
+    socket.on('disconnect', (reason: string) => {
+      console.log(formatLog(`[SOCKET] disconnect socket_id=${socket.id} reason=${reason}`));
+    });
   });
 
   const handlers = createSocketHandlers(gameStore, io);
