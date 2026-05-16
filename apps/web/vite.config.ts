@@ -12,9 +12,9 @@ export default defineConfig({
       injectRegister: 'auto',
       includeAssets: ['icons/*.svg'],
       manifest: {
-        name: 'Accio Trago',
-        short_name: 'Accio',
-        description: 'Juego de cartas multiplayer de Harry Potter',
+        name: 'Partybooster HPE',
+        short_name: 'Partybooster',
+        description: 'Real-time multiplayer card game',
         theme_color: '#09090b',
         background_color: '#09090b',
         display: 'standalone',
