@@ -113,7 +113,7 @@ connect() {
             lastError: null,
             isLoading: false,
             isJoiningRoom: false,
-            currentScreen: 'lobby',
+            currentScreen: data.gameState.status === 'playing' ? 'game-arena' : 'lobby',
             prevScreen: 'join-create',
           });
         });
