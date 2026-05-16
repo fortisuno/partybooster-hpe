@@ -1,12 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '@/store/useGameStore';
 import { MagicCard } from '@/components/atoms/MagicCard';
+import { CardSkeleton } from '@/components/atoms/CardSkeleton';
 import { HouseShield } from '@/components/atoms/HouseShield';
 import { PlayerCounter } from '@/components/molecules/PlayerCounter';
 import { FinishTurnButton } from '@/components/organisms/FinishTurnButton';
 
 export function ScreenGameArena() {
-  const { gameState, playerId, lastDrawnCard } = useGameStore();
+  const { gameState, playerId, lastDrawnCard, isCardTransitioning } = useGameStore();
 
   if (!gameState) return null;
 
@@ -54,10 +55,31 @@ export function ScreenGameArena() {
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center -mt-4">
-          <MagicCard
-            card={lastDrawnCard}
-            className="mb-6"
-          />
+          <AnimatePresence mode="wait">
+            {isCardTransitioning ? (
+              <motion.div
+                key="card-skeleton"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="mb-6"
+              >
+                <CardSkeleton />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={lastDrawnCard?.name ?? 'empty'}
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-6"
+              >
+                <MagicCard card={lastDrawnCard} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {isMyTurn && <FinishTurnButton />}
 

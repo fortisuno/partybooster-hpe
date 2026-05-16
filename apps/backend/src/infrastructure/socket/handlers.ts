@@ -147,11 +147,6 @@ export function createSocketHandlers(gameStore: GameStore, io: Server): SocketHa
         }
       }
 
-      if (gameState.status !== 'lobby') {
-        emitError(socket, 'El juego ya ha comenzado.');
-        return;
-      }
-
       // Check for active player with same playerId (robust duplicate prevention)
       if (existingPlayerId) {
         const existingPlayer = gameState.players.find((p) => p.id === existingPlayerId && !p.offline);
@@ -446,13 +441,14 @@ export function createSocketHandlers(gameStore: GameStore, io: Server): SocketHa
         return;
       }
 
-      const updatedGameState = {
-        ...gameState,
-        players: updatedPlayers,
-      };
+      let updatedGameState = { ...gameState, players: updatedPlayers };
+      if (gameState.currentPlayerId === playerId) {
+        updatedGameState = turnManager.advanceTurn(updatedGameState);
+      }
       await gameStore.setRoom(roomCode, updatedGameState);
 
       io.to(roomCode).emit('player:left', { playerId });
+      io.to(roomCode).emit('room:updated', { gameState: updatedGameState });
 
       if (newHostId) {
         io.to(roomCode).emit('host:changed', { newHostId });
@@ -536,7 +532,7 @@ export function createSocketHandlers(gameStore: GameStore, io: Server): SocketHa
           return;
         }
 
-        const { players: updatedPlayers, newHostId } = roomManager.markPlayerOffline(gameState.players, playerId);
+        const { players: updatedPlayers, newHostId } = roomManager.removePlayer(gameState.players, playerId);
 
         if (updatedPlayers.length === 0) {
           await gameStore.deleteRoom(roomCode);
@@ -548,13 +544,13 @@ export function createSocketHandlers(gameStore: GameStore, io: Server): SocketHa
           return;
         }
 
-        const updatedGameState = {
-          ...gameState,
-          players: updatedPlayers,
-        };
+        let updatedGameState = { ...gameState, players: updatedPlayers };
+        if (gameState.currentPlayerId === playerId) {
+          updatedGameState = turnManager.advanceTurn(updatedGameState);
+        }
         await gameStore.setRoom(roomCode, updatedGameState);
 
-        io.to(roomCode).emit('player:offline', { playerId });
+        io.to(roomCode).emit('room:updated', { gameState: updatedGameState });
 
         if (newHostId) {
           io.to(roomCode).emit('host:changed', { newHostId });

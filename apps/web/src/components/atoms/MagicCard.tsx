@@ -32,7 +32,7 @@ export function MagicCard({ card, className }: MagicCardProps) {
 
   return (
     <motion.div
-      key={card.name + Date.now()}
+      key={card.name}
       variants={cardVariants}
       initial="initial"
       animate="animate"

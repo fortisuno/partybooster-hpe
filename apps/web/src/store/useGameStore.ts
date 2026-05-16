@@ -24,6 +24,7 @@ interface GameStore {
   gameState: GameState | null;
   lastError: string | null;
   lastDrawnCard: Card | null;
+  isCardTransitioning: boolean;
   currentScreen: ScreenId;
   prevScreen: ScreenId | null;
   userProfile: UserProfile;
@@ -63,6 +64,7 @@ export const useGameStore = create<GameStore>()(
       gameState: null,
       lastError: null,
       lastDrawnCard: null,
+      isCardTransitioning: false,
       currentScreen: 'join-create',
       prevScreen: null,
       userProfile: {
@@ -158,6 +160,7 @@ connect() {
             gameState: data.gameState,
             lastDrawnCard: data.card,
             isLoading: false,
+            isCardTransitioning: false,
           });
         });
 
@@ -218,7 +221,7 @@ connect() {
       finishTurn() {
         const { socket } = get();
         if (!socket) return;
-        set({ isLoading: true });
+        set({ isLoading: true, isCardTransitioning: true });
         socket.emit('turn:finish');
       },
 
