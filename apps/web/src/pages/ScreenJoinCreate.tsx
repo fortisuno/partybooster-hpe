@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/Input';
 import { Header } from '@/components/organisms/Header';
 
 export function ScreenJoinCreate() {
-  const { connect, createRoom, joinRoom, isConnected } = useGameStore();
+  const { connect, createRoom, joinRoom, isConnected, isJoiningRoom } = useGameStore();
   const [roomCode, setRoomCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -85,11 +85,11 @@ export function ScreenJoinCreate() {
 
             <Button
               onClick={handleJoinRoom}
-              disabled={roomCode.length < 5 || isLoading}
+              disabled={roomCode.length < 5 || isLoading || isJoiningRoom}
               size="lg"
               className="w-full"
             >
-              {isLoading ? 'Uniéndose...' : 'Unirse a la Sala'}
+              {isJoiningRoom ? 'Uniéndose...' : 'Unirse a la Sala'}
             </Button>
 
             <button

@@ -73,6 +73,14 @@ async function bootstrap() {
     return reply.send({ status: 'reset', rooms: 0, players: 0 });
   });
 
+  fastify.get('/storage-status', async () => {
+    const status = await gameStore.getStatus();
+    return {
+      ...status,
+      timestamp: new Date().toISOString(),
+    };
+  });
+
   await fastify.listen({ port: SERVER_PORT, host: '0.0.0.0' });
   console.log(`Servidor iniciado en el puerto ${SERVER_PORT}`);
 }

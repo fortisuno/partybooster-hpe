@@ -152,6 +152,21 @@ export function createSocketHandlers(gameStore: GameStore, io: Server): SocketHa
         return;
       }
 
+      // Check for active player with same playerId (robust duplicate prevention)
+      if (existingPlayerId) {
+        const existingPlayer = gameState.players.find((p) => p.id === existingPlayerId && !p.offline);
+        if (existingPlayer) {
+          socketToPlayer.set(socket.id, existingPlayerId);
+          socket.emit('room:joined', {
+            roomCode: upperRoomCode,
+            playerId: existingPlayerId,
+            gameState,
+          });
+          socket.join(upperRoomCode);
+          return;
+        }
+      }
+
       // Check for duplicate join on same socket
       const existingSocketPlayerId = socketToPlayer.get(socket.id);
       if (existingSocketPlayerId) {
@@ -194,7 +209,7 @@ export function createSocketHandlers(gameStore: GameStore, io: Server): SocketHa
       });
 
       socket.join(upperRoomCode);
-      socket.to(upperRoomCode).emit('player:joined', { player });
+      socket.to(upperRoomCode).emit('room:updated', { gameState: updatedGameState });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error interno del servidor';
       socket.emit('error', { message });

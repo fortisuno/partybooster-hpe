@@ -4,7 +4,6 @@ import { MagicCard } from '@/components/atoms/MagicCard';
 import { HouseShield } from '@/components/atoms/HouseShield';
 import { PlayerCounter } from '@/components/molecules/PlayerCounter';
 import { FinishTurnButton } from '@/components/organisms/FinishTurnButton';
-import { Header } from '@/components/organisms/Header';
 
 export function ScreenGameArena() {
   const { gameState, playerId, lastDrawnCard } = useGameStore();
@@ -23,7 +22,6 @@ export function ScreenGameArena() {
 
   return (
     <>
-      <Header />
       <motion.div
         key="game-arena"
         variants={screenVariants}

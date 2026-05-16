@@ -15,6 +15,7 @@ interface GameStore {
   socket: Socket | null;
   isConnected: boolean;
   isLoading: boolean;
+  isJoiningRoom: boolean;
   playerId: string | null;
   playerName: string | null;
   playerHouse: House | null;
@@ -53,6 +54,7 @@ export const useGameStore = create<GameStore>()(
       socket: null,
       isConnected: false,
       isLoading: false,
+      isJoiningRoom: false,
       playerId: null,
       playerName: null,
       playerHouse: null,
@@ -69,17 +71,10 @@ export const useGameStore = create<GameStore>()(
       },
       sidebarOpen: false,
 
-      connect() {
+connect() {
         const socket = getSocket();
 
-        if (socket.connected) {
-          set({ socket, isConnected: true });
-          const { playerId } = get();
-          if (playerId) {
-            socket.emit('player:reconnect', { playerId });
-          }
-          return;
-        }
+        socket.removeAllListeners();
 
         socket.on('connect', () => {
           set({ isConnected: true, lastError: null });
@@ -101,6 +96,7 @@ export const useGameStore = create<GameStore>()(
             isHost: true,
             lastError: null,
             isLoading: false,
+            isJoiningRoom: false,
             currentScreen: 'lobby',
             prevScreen: 'join-create',
           });
@@ -114,6 +110,7 @@ export const useGameStore = create<GameStore>()(
             isHost: false,
             lastError: null,
             isLoading: false,
+            isJoiningRoom: false,
             currentScreen: 'lobby',
             prevScreen: 'join-create',
           });
@@ -129,6 +126,7 @@ export const useGameStore = create<GameStore>()(
             prevScreen: 'join-create',
             lastError: null,
             isLoading: false,
+            isJoiningRoom: false,
           });
         });
 
@@ -143,18 +141,6 @@ export const useGameStore = create<GameStore>()(
             sidebarOpen: false,
             isLoading: false,
           });
-        });
-
-        socket.on('player:joined', (data: { player: Player }) => {
-          const { gameState } = get();
-          if (gameState) {
-            set({
-              gameState: {
-                ...gameState,
-                players: [...gameState.players, data.player],
-              },
-            });
-          }
         });
 
         socket.on('game:started', (data: { gameState: GameState; card: Card }) => {
@@ -187,65 +173,12 @@ export const useGameStore = create<GameStore>()(
           });
         });
 
-        socket.on('player:left', (data: { playerId: string }) => {
-          const { gameState } = get();
-          if (gameState) {
-            set({
-              gameState: {
-                ...gameState,
-                players: gameState.players.filter((p: Player) => p.id !== data.playerId),
-              },
-            });
-          }
-        });
-
-        socket.on('player:offline', (data: { playerId: string }) => {
-          const { gameState } = get();
-          if (gameState) {
-            set({
-              gameState: {
-                ...gameState,
-                players: gameState.players.map((p: Player) =>
-                  p.id === data.playerId ? { ...p, offline: true } : p
-                ),
-              },
-            });
-          }
-        });
-
-        socket.on('player:reconnected', (data: { playerId: string }) => {
-          const { gameState } = get();
-          if (gameState) {
-            set({
-              gameState: {
-                ...gameState,
-                players: gameState.players.map((p: Player) =>
-                  p.id === data.playerId ? { ...p, offline: false } : p
-                ),
-              },
-            });
-          }
-        });
-
-        socket.on('host:changed', (data: { newHostId: string }) => {
-          const { gameState } = get();
-          const { playerId } = get();
-          if (gameState) {
-            set({
-              gameState: {
-                ...gameState,
-                players: gameState.players.map((p: Player) => ({
-                  ...p,
-                  isHost: p.id === data.newHostId,
-                })),
-              },
-              isHost: data.newHostId === playerId,
-            });
-          }
+        socket.on('room:updated', (data: { gameState: GameState }) => {
+          set({ gameState: data.gameState });
         });
 
         socket.on('error', (data: { message: string }) => {
-          set({ lastError: data.message, isLoading: false });
+          set({ lastError: data.message, isLoading: false, isJoiningRoom: false });
         });
 
         socket.connect();
@@ -269,9 +202,9 @@ export const useGameStore = create<GameStore>()(
       },
 
       joinRoom(roomCode: string, name: string, house: House) {
-        const { socket, playerId } = get();
-        if (!socket) return;
-        set({ userProfile: { name, house }, playerName: name, playerHouse: house, roomCode: roomCode.toUpperCase(), isLoading: true });
+        const { socket, playerId, isJoiningRoom } = get();
+        if (!socket || isJoiningRoom) return;
+        set({ userProfile: { name, house }, playerName: name, playerHouse: house, roomCode: roomCode.toUpperCase(), isLoading: true, isJoiningRoom: true });
         socket.emit('room:join', { roomCode: roomCode.toUpperCase(), name, house, playerId });
       },
 

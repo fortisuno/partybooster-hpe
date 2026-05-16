@@ -1,5 +1,21 @@
 import type { GameState } from '@game/shared';
 
+export interface StorageMetrics {
+  totalRooms: number;
+  totalPlayers: number;
+  totalSocketMappings: number;
+}
+
+export interface StorageStatus {
+  storageType: 'in-memory' | 'redis';
+  status: 'operational' | 'degraded' | 'offline';
+  metrics: StorageMetrics;
+  payload: {
+    roomCodes: string[];
+    playerIds: string[];
+  };
+}
+
 export interface GameStore {
   getRoom(roomCode: string): Promise<GameState | undefined>;
   setRoom(roomCode: string, gameState: GameState): Promise<void>;
@@ -11,5 +27,6 @@ export interface GameStore {
   deletePlayerRoom(playerId: string): Promise<void>;
   getPlayersInRoom(roomCode: string): Promise<string[]>;
 
+  getStatus(): Promise<StorageStatus>;
   clearAll(): Promise<void>;
 }

@@ -1,5 +1,5 @@
 import type { GameState } from '@game/shared';
-import type { GameStore } from './game-store.js';
+import type { GameStore, StorageStatus } from './game-store.js';
 
 export interface InMemoryStore extends GameStore {
   rooms: Map<string, GameState>;
@@ -50,6 +50,22 @@ export function createInMemoryStore(): InMemoryStore {
     return result;
   }
 
+  async function getStatus(): Promise<StorageStatus> {
+    return {
+      storageType: 'in-memory',
+      status: 'operational',
+      metrics: {
+        totalRooms: rooms.size,
+        totalPlayers: playerToRoom.size,
+        totalSocketMappings: socketToPlayer.size,
+      },
+      payload: {
+        roomCodes: Array.from(rooms.keys()),
+        playerIds: Array.from(playerToRoom.keys()),
+      },
+    };
+  }
+
   async function clearAll(): Promise<void> {
     rooms.clear();
     playerToRoom.clear();
@@ -68,6 +84,7 @@ export function createInMemoryStore(): InMemoryStore {
     setPlayerRoom,
     deletePlayerRoom,
     getPlayersInRoom,
+    getStatus,
     clearAll,
   };
 }

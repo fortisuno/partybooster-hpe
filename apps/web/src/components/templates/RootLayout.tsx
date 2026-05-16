@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { useGameStore } from '@/store/useGameStore';
+import { Footer } from '@/components/organisms/Footer';
 import { SidebarPlayers } from '@/components/organisms/SidebarPlayers';
 import { ToastProvider } from '@/components/ui/useToast';
 import { Toaster } from '@/components/ui/Toaster';
@@ -17,10 +18,11 @@ export function RootLayout({ children, className }: RootLayoutProps) {
     <ToastProvider>
       <div className="h-screen bg-radial flex flex-col overflow-hidden">
         <div className="h-screen max-w-mobile mx-auto relative w-full flex flex-col overflow-hidden">
-          <main className={cn('flex-1 pb-6 px-5', className)}>
+          <main className={cn('flex-1 flex flex-col overflow-hidden min-h-0 pb-6 px-5', className)}>
             {children}
           </main>
           {currentScreen === 'game-arena' && <SidebarPlayers />}
+          <Footer />
         </div>
         <Toaster />
       </div>

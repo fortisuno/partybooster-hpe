@@ -47,7 +47,7 @@ export function ScreenCardInfo() {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="flex flex-col h-full overflow-hidden pt-16"
+      className="flex flex-col flex-1 min-h-0 overflow-hidden pt-16"
     >
       <div className="flex items-center gap-3 mb-6">
         <button
@@ -62,7 +62,7 @@ export function ScreenCardInfo() {
         </h2>
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-3 pr-1">
+      <div className="flex-1 min-h-0 overflow-y-auto touch-pan-y space-y-3 pr-1">
         {HOUSES.map((house) => (
           <div key={house} className="glass rounded-2xl overflow-hidden">
             <button

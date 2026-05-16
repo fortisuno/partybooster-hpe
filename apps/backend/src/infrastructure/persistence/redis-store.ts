@@ -1,6 +1,6 @@
 import Redis from 'ioredis';
 import type { GameState } from '@game/shared';
-import type { GameStore } from './game-store.js';
+import type { GameStore, StorageStatus } from './game-store.js';
 
 const ROOM_PREFIX = 'room:';
 const PLAYER_PREFIX = 'player:';
@@ -55,6 +55,27 @@ export function createRedisStore(redisUrl: string): GameStore {
     return await redis.smembers(`${ROOM_PLAYERS_PREFIX}${roomCode}`);
   }
 
+  async function getStatus(): Promise<StorageStatus> {
+    const redisStatus = redis.status === 'ready' ? 'operational' : 'degraded';
+    const roomKeys = await redis.keys(`${ROOM_PREFIX}*`);
+    const playerKeys = await redis.keys(`${PLAYER_PREFIX}*`);
+    const roomCodes = roomKeys.map((k) => k.replace(ROOM_PREFIX, ''));
+
+    return {
+      storageType: 'redis',
+      status: redisStatus,
+      metrics: {
+        totalRooms: roomKeys.length,
+        totalPlayers: playerKeys.length,
+        totalSocketMappings: 0,
+      },
+      payload: {
+        roomCodes,
+        playerIds: playerKeys.map((k) => k.replace(PLAYER_PREFIX, '')),
+      },
+    };
+  }
+
   async function clearAll(): Promise<void> {
     const keys = await redis.keys(`${ROOM_PREFIX}*`);
     const playerKeys = await redis.keys(`${PLAYER_PREFIX}*`);
@@ -74,6 +95,7 @@ export function createRedisStore(redisUrl: string): GameStore {
     setPlayerRoom,
     deletePlayerRoom,
     getPlayersInRoom,
+    getStatus,
     clearAll,
   };
 }
