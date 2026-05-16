@@ -5,6 +5,7 @@ export const ALLOWED_ORIGINS = [
   'http://localhost:3001',
   'http://localhost:5173',
   'https://partybooster-hpe-d30hs8idn-pgomezm0486s-projects.vercel.app',
+  'https://partybooster-hpe-web.vercel.app',
 ];
 
 async function corsConfig(fastify: FastifyInstance) {
